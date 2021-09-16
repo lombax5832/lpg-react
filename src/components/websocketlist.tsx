@@ -1,22 +1,39 @@
-import { List, ListItem, ListItemText, Typography } from "@material-ui/core";
-import { Component, useContext, useEffect, useState } from "react";
-import { WebSocketContext } from "./websocketprovider";
+import { List, ListItem, ListItemText, ListSubheader } from "@material-ui/core";
+import { Component } from "react";
+import WebSocketContext from "../context/websocketcontext";
+import { ServerMessage } from "../interfaces/servermessage";
+import Chart from "./chart";
 
-export default function WebSocketList() {
-    const websocket = useContext(WebSocketContext)
+class WebSocketList extends Component<{ ws: WebSocket | null }, { messages: ServerMessage[], ws: WebSocket | null }>{
 
-    const [lastMessage, setLastMessage] = useState<any[]>([])
+    static contextType = WebSocketContext;
 
-    useEffect(() => {
-        if (websocket) {
-            websocket.onmessage = (event: MessageEvent) => {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            messages: [],
+            ws: this.props.ws
+        }
+    }
+
+    componentDidUpdate() {
+        if (this.props.ws && !this.props.ws.onmessage) {
+            this.props.ws.onmessage = (event: MessageEvent) => {
                 console.log("got message", event)
-                setLastMessage([...lastMessage, event.data])
+                this.setState({ messages: [...this.state.messages, JSON.parse(event.data)] })
             }
         }
-    })
+    }
 
-    return (<List>{lastMessage.map((val, i) => {
-        return <ListItem><ListItemText key={i}>{val}</ListItemText></ListItem>
-    })}</List>)
+    render() {
+        return (<><List>
+            <ListSubheader inset>Data from websocket</ListSubheader>
+            {this.state.messages.map((val, i) => {
+                return <ListItem key={i}><ListItemText>{`${i}: ${JSON.stringify(val)}`}</ListItemText></ListItem>
+            })}</List>
+            <Chart /></>)
+    }
 }
+
+export default WebSocketList

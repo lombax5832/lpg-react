@@ -2,15 +2,14 @@ import logo from './logo.svg';
 import './App.css';
 import Page from './components/page'
 import { Card, CardContent, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
-import WebSocketProvider from './components/websocketprovider';
+import WebSocketProvider from './components/websocketcomponent';
 import WebSocketList from './components/websocketlist';
+import WebSocketComponent from './components/websocketcomponent';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(5),
-      width: theme.spacing(200),
-      height: theme.spacing(16),
     },
   },
 }));
@@ -27,16 +26,9 @@ function App() {
     }}>
       <Grid container alignItems='center' justifyContent='center'>
         <Grid item>
-          <Card style={{ maxHeight: 500, overflow: 'auto' }}>
+          <Card style={{ maxHeight:'90vh', overflow: 'auto' }}>
             <CardContent>
-              <WebSocketProvider>
-                <WebSocketList></WebSocketList>
-              </WebSocketProvider>
-              <Page>
-                <Typography>
-                  Toggled Thing
-                </Typography>
-              </Page>
+              <WebSocketComponent/>
             </CardContent>
           </Card>
         </Grid>

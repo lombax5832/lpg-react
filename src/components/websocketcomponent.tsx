@@ -1,9 +1,9 @@
-import React from "react";
 import { Component } from "react";
+import Chart from "./chart";
+import WebSocketList from "./websocketlist";
 
-export const WebSocketContext = React.createContext<WebSocket | null>(null);
 
-export default class WebSocketProvider extends Component<{}, { ws: WebSocket | null }> {
+export default class WebSocketComponent extends Component<{}, { ws: WebSocket | null }> {
     constructor(props: any) {
         super(props);
 
@@ -16,6 +16,7 @@ export default class WebSocketProvider extends Component<{}, { ws: WebSocket | n
 
     componentDidMount() {
         this.connect();
+        this.forceUpdate();
     }
 
     timeout = 250; // Initial timeout duration as a class variable
@@ -74,6 +75,6 @@ export default class WebSocketProvider extends Component<{}, { ws: WebSocket | n
     };
 
     render() {
-        return (<WebSocketContext.Provider value={this.state.ws}>{this.props.children}</WebSocketContext.Provider>);
+        return (<WebSocketList ws={this.state.ws}></WebSocketList>);
     }
 }
