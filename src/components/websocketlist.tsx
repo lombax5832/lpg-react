@@ -4,7 +4,7 @@ import WebSocketContext from "../context/websocketcontext";
 import { ServerMessage } from "../interfaces/servermessage";
 import Chart from "./chart";
 
-class WebSocketList extends Component<{ ws: WebSocket | null }, { messages: ServerMessage[], ws: WebSocket | null }>{
+class WebSocketList extends Component<{ ws: WebSocket | null }, { messages: ServerMessage[] }>{
 
     static contextType = WebSocketContext;
 
@@ -13,7 +13,6 @@ class WebSocketList extends Component<{ ws: WebSocket | null }, { messages: Serv
 
         this.state = {
             messages: [],
-            ws: this.props.ws
         }
     }
 
@@ -27,12 +26,13 @@ class WebSocketList extends Component<{ ws: WebSocket | null }, { messages: Serv
     }
 
     render() {
+        const data: number[] = this.state.messages.map(val=>val.PT_HE)
         return (<><List>
             <ListSubheader inset>Data from websocket</ListSubheader>
-            {this.state.messages.map((val, i) => {
+            {/*this.state.messages.map((val, i) => {
                 return <ListItem key={i}><ListItemText>{`${i}: ${JSON.stringify(val)}`}</ListItemText></ListItem>
-            })}</List>
-            <Chart /></>)
+            })*/}</List>
+            <Chart data={data}/></>)
     }
 }
 
