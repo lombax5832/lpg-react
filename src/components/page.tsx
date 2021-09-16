@@ -24,10 +24,7 @@ const Page = (props: any) => {
     return (
         <div>
             <Button onClick={() => setToggle(!toggle)} variant="contained"><Typography>Test</Typography></Button>
-            {toggle && (<>
-                <br />
-                Cool Guy
-            </>)}
+            {toggle && (children)}
         </div>
     );
 }
