@@ -25,7 +25,7 @@ export default class WebSocketProvider extends Component<{}, { ws: WebSocket | n
      * This function establishes the connect with the websocket and also ensures constant reconnection if connection closes
      */
     connect = () => {
-        var ws = new WebSocket("ws://localhost:3000/ws");
+        var ws = new WebSocket("ws://localhost:8765");
         let that = this; // cache the this
         var connectInterval: NodeJS.Timeout;
 

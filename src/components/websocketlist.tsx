@@ -1,22 +1,22 @@
-import { Typography } from "@material-ui/core";
+import { List, ListItem, ListItemText, Typography } from "@material-ui/core";
 import { Component, useContext, useEffect, useState } from "react";
 import { WebSocketContext } from "./websocketprovider";
 
 export default function WebSocketList() {
     const websocket = useContext(WebSocketContext)
 
-    const [lastMessage, setLastMessage] = useState<any>(null)
+    const [lastMessage, setLastMessage] = useState<any[]>([])
 
     useEffect(() => {
-        if (!websocket?.onmessage) {
-            console.log("onmessage does not exist yet")
-            if (websocket) {
-                websocket.onmessage = (event) => {
-                    setLastMessage(event)
-                }
+        if (websocket) {
+            websocket.onmessage = (event: MessageEvent) => {
+                console.log("got message", event)
+                setLastMessage([...lastMessage, event.data])
             }
         }
     })
 
-    return (<Typography>{lastMessage}</Typography>)
+    return (<List>{lastMessage.map((val, i) => {
+        return <ListItem><ListItemText key={i}>{val}</ListItemText></ListItem>
+    })}</List>)
 }

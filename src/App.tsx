@@ -8,8 +8,8 @@ import WebSocketList from './components/websocketlist';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
-      margin: theme.spacing(1),
-      width: theme.spacing(16),
+      margin: theme.spacing(5),
+      width: theme.spacing(200),
       height: theme.spacing(16),
     },
   },
@@ -20,17 +20,21 @@ function App() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
       <Grid container alignItems='center' justifyContent='center'>
         <Grid item>
-          <Card>
+          <Card style={{ maxHeight: 500, overflow: 'auto' }}>
             <CardContent>
               <WebSocketProvider>
                 <WebSocketList></WebSocketList>
               </WebSocketProvider>
               <Page>
                 <Typography>
-                  Cool Guy
+                  Toggled Thing
                 </Typography>
               </Page>
             </CardContent>
