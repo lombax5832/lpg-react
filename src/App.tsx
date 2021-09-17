@@ -9,7 +9,7 @@ import WebSocketComponent from './components/websocketcomponent';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
-      margin: theme.spacing(5),
+      margin: theme.spacing(0),
     },
   },
 }));
@@ -25,8 +25,8 @@ function App() {
       justifyContent: 'center',
     }}>
       <Grid container alignItems='center' justifyContent='center'>
-        <Grid item>
-          <Card style={{ maxHeight:'90vh', overflow: 'auto' }}>
+        <Grid item xs={12}>
+          <Card style={{ height:'auto', overflow: 'auto' }}>
             <CardContent>
               <WebSocketComponent/>
             </CardContent>
