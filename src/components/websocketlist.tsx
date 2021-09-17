@@ -60,15 +60,18 @@ class WebSocketList extends Component<{ ws: WebSocket | null }, { data: Data, ti
         if (this.state.timeout.status != nextState.timeout.status) {
             return true
         }
-        if (this.state.timeout.status == false) {
-            this.makeTimeout(20);
+        if (this.state.timeout.status == false && this.state.data.PT_HE.length != nextState.data.PT_HE.length) {
+            this.makeTimeout(10);
             return false
+        } else if (this.state.timeout.status == false) {
+            return true
         }
 
         return false
     }
 
     componentDidUpdate() {
+        console.log("rerender");
         if (this.props.ws && !this.props.ws.onmessage) {
             this.props.ws.onmessage = (event: MessageEvent) => {
                 let item = JSON.parse(event.data)
