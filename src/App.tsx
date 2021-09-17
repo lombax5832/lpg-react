@@ -1,9 +1,5 @@
-import logo from './logo.svg';
+import { Card, CardContent, Grid, makeStyles } from '@material-ui/core';
 import './App.css';
-import Page from './components/page'
-import { Card, CardContent, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
-import WebSocketProvider from './components/websocketcomponent';
-import WebSocketList from './components/websocketlist';
 import WebSocketComponent from './components/websocketcomponent';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,9 +22,9 @@ function App() {
     }}>
       <Grid container alignItems='center' justifyContent='center'>
         <Grid item xs={12}>
-          <Card style={{ height:'auto', overflow: 'auto' }}>
+          <Card style={{ height: 'auto', overflow: 'auto' }}>
             <CardContent>
-              <WebSocketComponent/>
+              <WebSocketComponent />
             </CardContent>
           </Card>
         </Grid>

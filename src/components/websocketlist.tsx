@@ -1,7 +1,6 @@
-import { Divider, Grid, List, ListItem, ListItemText, ListSubheader } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { Component } from "react";
 import WebSocketContext from "../context/websocketcontext";
-import { ServerMessage } from "../interfaces/servermessage";
 import Chart from "./chart";
 
 interface Data {
@@ -19,7 +18,7 @@ interface Data {
     FT_Thrust: number[]
 }
 
-class WebSocketList extends Component<{ ws: WebSocket | null }, { data: Data }>{
+class WebSocketList extends Component<{ ws: WebSocket | null }, { data: Data, timeout: { status: Boolean } }>{
 
     static contextType = WebSocketContext;
 
@@ -27,6 +26,9 @@ class WebSocketList extends Component<{ ws: WebSocket | null }, { data: Data }>{
         super(props);
 
         this.state = {
+            timeout: {
+                status: false
+            },
             data: {
                 PT_HE: [],
                 PT_Purge: [],
@@ -44,33 +46,50 @@ class WebSocketList extends Component<{ ws: WebSocket | null }, { data: Data }>{
         }
     }
 
+    makeTimeout(time: number) {
+        this.setState({ timeout: { status: true } })
+
+        let timeout = setTimeout(() => {
+            this.forceUpdate();
+            this.setState({ timeout: { status: false } })
+        }, time);
+        return timeout
+    }
+
     shouldComponentUpdate(nextProps, nextState) {
-        if (nextState.data.PT_HE.length % 20 !== 0)
+        if (this.state.timeout.status != nextState.timeout.status) {
+            return true
+        }
+        if (this.state.timeout.status == false) {
+            this.makeTimeout(20);
             return false
-        return true
+        }
+
+        return false
     }
 
     componentDidUpdate() {
         if (this.props.ws && !this.props.ws.onmessage) {
             this.props.ws.onmessage = (event: MessageEvent) => {
-                console.log("got message", event)
                 let item = JSON.parse(event.data)
-                this.setState({
-                    data: {
-                        PT_HE: [...this.state.data.PT_HE, item.PT_HE],
-                        PT_Purge: [...this.state.data.PT_Purge, item.PT_Purge],
-                        PT_Pneu: [...this.state.data.PT_Pneu, item.PT_Pneu],
-                        PT_FUEL_PV: [...this.state.data.PT_FUEL_PV, item.PT_FUEL_PV],
-                        PT_LOX_PV: [...this.state.data.PT_LOX_PV, item.PT_LOX_PV],
-                        PT_FUEL_INJ: [...this.state.data.PT_FUEL_INJ, item.PT_FUEL_INJ],
-                        PT_CHAM: [...this.state.data.PT_CHAM, item.PT_CHAM],
-                        TC_FUEL_PV: [...this.state.data.TC_FUEL_PV, item.TC_FUEL_PV],
-                        TC_LOX_PV: [...this.state.data.TC_LOX_PV, item.TC_LOX_PV],
-                        TC_LOX_Valve_Main: [...this.state.data.TC_LOX_Valve_Main, item.TC_LOX_Valve_Main],
-                        RC_LOX_Level: [...this.state.data.RC_LOX_Level, item.RC_LOX_Level],
-                        FT_Thrust: [...this.state.data.FT_Thrust, item.FT_Thrust],
-                    }
-                })
+                if (item.PT_HE) {
+                    this.setState({
+                        data: {
+                            PT_HE: [...this.state.data.PT_HE, item.PT_HE],
+                            PT_Purge: [...this.state.data.PT_Purge, item.PT_Purge],
+                            PT_Pneu: [...this.state.data.PT_Pneu, item.PT_Pneu],
+                            PT_FUEL_PV: [...this.state.data.PT_FUEL_PV, item.PT_FUEL_PV],
+                            PT_LOX_PV: [...this.state.data.PT_LOX_PV, item.PT_LOX_PV],
+                            PT_FUEL_INJ: [...this.state.data.PT_FUEL_INJ, item.PT_FUEL_INJ],
+                            PT_CHAM: [...this.state.data.PT_CHAM, item.PT_CHAM],
+                            TC_FUEL_PV: [...this.state.data.TC_FUEL_PV, item.TC_FUEL_PV],
+                            TC_LOX_PV: [...this.state.data.TC_LOX_PV, item.TC_LOX_PV],
+                            TC_LOX_Valve_Main: [...this.state.data.TC_LOX_Valve_Main, item.TC_LOX_Valve_Main],
+                            RC_LOX_Level: [...this.state.data.RC_LOX_Level, item.RC_LOX_Level],
+                            FT_Thrust: [...this.state.data.FT_Thrust, item.FT_Thrust],
+                        }
+                    })
+                }
             }
         }
     }
