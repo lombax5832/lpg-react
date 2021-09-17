@@ -46,6 +46,13 @@ class WebSocketList extends Component<{ ws: WebSocket | null }, { data: Data, ti
         }
     }
 
+    /**
+     * 
+     * Utility function to help prevent rendering excessively
+     * 
+     * @param time time in milliseconds to set the timeout for
+     * @returns void
+     */
     makeTimeout(time: number) {
         this.setState({ timeout: { status: true } })
 
@@ -56,14 +63,23 @@ class WebSocketList extends Component<{ ws: WebSocket | null }, { data: Data, ti
         return timeout
     }
 
+    /**
+     * 
+     * Makes sure that the component isn't queuing renders faster than it can finish rendering
+     */
     shouldComponentUpdate(nextProps, nextState) {
+        //We want to update if the timeout status is changing
         if (this.state.timeout.status != nextState.timeout.status) {
             return true
         }
+        //If there isn't an active timeout and the length of the data set is changed,
+        //we can update in 10 milliseconds while refusing to update naturally
         if (this.state.timeout.status == false && this.state.data.PT_HE.length != nextState.data.PT_HE.length) {
             this.makeTimeout(10);
             return false
-        } else if (this.state.timeout.status == false) {
+        }
+        //If some other property changed, we can update normally for it here
+        else if (this.state.timeout.status == false) {
             return true
         }
 
