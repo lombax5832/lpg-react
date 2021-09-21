@@ -63,6 +63,25 @@ class WebSocketList extends Component<{ ws: WebSocket | null }, { data: Data, ti
         return timeout
     }
 
+    addData = (message) => {
+        this.setState({
+            data: {
+                PT_HE: [...this.state.data.PT_HE, message.PT_HE],
+                PT_Purge: [...this.state.data.PT_Purge, message.PT_Purge],
+                PT_Pneu: [...this.state.data.PT_Pneu, message.PT_Pneu],
+                PT_FUEL_PV: [...this.state.data.PT_FUEL_PV, message.PT_FUEL_PV],
+                PT_LOX_PV: [...this.state.data.PT_LOX_PV, message.PT_LOX_PV],
+                PT_FUEL_INJ: [...this.state.data.PT_FUEL_INJ, message.PT_FUEL_INJ],
+                PT_CHAM: [...this.state.data.PT_CHAM, message.PT_CHAM],
+                TC_FUEL_PV: [...this.state.data.TC_FUEL_PV, message.TC_FUEL_PV],
+                TC_LOX_PV: [...this.state.data.TC_LOX_PV, message.TC_LOX_PV],
+                TC_LOX_Valve_Main: [...this.state.data.TC_LOX_Valve_Main, message.TC_LOX_Valve_Main],
+                RC_LOX_Level: [...this.state.data.RC_LOX_Level, message.RC_LOX_Level],
+                FT_Thrust: [...this.state.data.FT_Thrust, message.FT_Thrust],
+            }
+        })
+    }
+
     /**
      * 
      * Makes sure that the component isn't queuing renders faster than it can finish rendering
@@ -75,7 +94,7 @@ class WebSocketList extends Component<{ ws: WebSocket | null }, { data: Data, ti
         //If there isn't an active timeout and the length of the data set is changed,
         //we can update in 10 milliseconds while refusing to update naturally
         if (this.state.timeout.status == false && this.state.data.PT_HE.length != nextState.data.PT_HE.length) {
-            this.makeTimeout(10);
+            this.makeTimeout(100);
             return false
         }
         //If some other property changed, we can update normally for it here
@@ -86,29 +105,14 @@ class WebSocketList extends Component<{ ws: WebSocket | null }, { data: Data, ti
         return false
     }
 
+
+
     componentDidUpdate() {
         console.log("rerender");
         if (this.props.ws && !this.props.ws.onmessage) {
             this.props.ws.onmessage = (event: MessageEvent) => {
                 let item = JSON.parse(event.data)
-                if (item.PT_HE) {
-                    this.setState({
-                        data: {
-                            PT_HE: [...this.state.data.PT_HE, item.PT_HE],
-                            PT_Purge: [...this.state.data.PT_Purge, item.PT_Purge],
-                            PT_Pneu: [...this.state.data.PT_Pneu, item.PT_Pneu],
-                            PT_FUEL_PV: [...this.state.data.PT_FUEL_PV, item.PT_FUEL_PV],
-                            PT_LOX_PV: [...this.state.data.PT_LOX_PV, item.PT_LOX_PV],
-                            PT_FUEL_INJ: [...this.state.data.PT_FUEL_INJ, item.PT_FUEL_INJ],
-                            PT_CHAM: [...this.state.data.PT_CHAM, item.PT_CHAM],
-                            TC_FUEL_PV: [...this.state.data.TC_FUEL_PV, item.TC_FUEL_PV],
-                            TC_LOX_PV: [...this.state.data.TC_LOX_PV, item.TC_LOX_PV],
-                            TC_LOX_Valve_Main: [...this.state.data.TC_LOX_Valve_Main, item.TC_LOX_Valve_Main],
-                            RC_LOX_Level: [...this.state.data.RC_LOX_Level, item.RC_LOX_Level],
-                            FT_Thrust: [...this.state.data.FT_Thrust, item.FT_Thrust],
-                        }
-                    })
-                }
+                item.message.forEach(this.addData)
             }
         }
     }
