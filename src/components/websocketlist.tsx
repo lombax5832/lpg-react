@@ -3,7 +3,7 @@ import { Component } from "react";
 import WebSocketContext from "../context/websocketcontext";
 import Chart from "./chart";
 
-interface Data {
+interface IData {
     PT_HE: number[]
     PT_Purge: number[]
     PT_Pneu: number[]
@@ -18,7 +18,7 @@ interface Data {
     FT_Thrust: number[]
 }
 
-class WebSocketList extends Component<{ ws: WebSocket | null }, { data: Data, timeout: { status: Boolean } }>{
+class WebSocketList extends Component<{ ws: WebSocket | null }, { data: IData, timeout: { status: Boolean } }>{
 
     static contextType = WebSocketContext;
 
@@ -63,6 +63,7 @@ class WebSocketList extends Component<{ ws: WebSocket | null }, { data: Data, ti
         return timeout
     }
 
+    /*
     addData = (message) => {
         this.setState({
             data: {
@@ -80,7 +81,7 @@ class WebSocketList extends Component<{ ws: WebSocket | null }, { data: Data, ti
                 FT_Thrust: [...this.state.data.FT_Thrust, message.FT_Thrust],
             }
         })
-    }
+    }*/
 
     /**
      * 
@@ -94,7 +95,7 @@ class WebSocketList extends Component<{ ws: WebSocket | null }, { data: Data, ti
         //If there isn't an active timeout and the length of the data set is changed,
         //we can update in 10 milliseconds while refusing to update naturally
         if (this.state.timeout.status == false && this.state.data.PT_HE.length != nextState.data.PT_HE.length) {
-            this.makeTimeout(100);
+            this.makeTimeout(50);
             return false
         }
         //If some other property changed, we can update normally for it here
@@ -112,7 +113,54 @@ class WebSocketList extends Component<{ ws: WebSocket | null }, { data: Data, ti
         if (this.props.ws && !this.props.ws.onmessage) {
             this.props.ws.onmessage = (event: MessageEvent) => {
                 let item = JSON.parse(event.data)
-                item.message.forEach(this.addData)
+                let data: IData = {
+                    PT_HE: [],
+                    PT_Purge: [],
+                    PT_Pneu: [],
+                    PT_FUEL_PV: [],
+                    PT_LOX_PV: [],
+                    PT_FUEL_INJ: [],
+                    PT_CHAM: [],
+                    TC_FUEL_PV: [],
+                    TC_LOX_PV: [],
+                    TC_LOX_Valve_Main: [],
+                    RC_LOX_Level: [],
+                    FT_Thrust: []
+                }
+                item.message.forEach((val, i) => {
+                    console.log(i)
+                    data = {
+                        PT_HE: [...data.PT_HE, val.PT_HE],
+                        PT_Purge: [...data.PT_Purge, val.PT_Purge],
+                        PT_Pneu: [...data.PT_Pneu, val.PT_Pneu],
+                        PT_FUEL_PV: [...data.PT_FUEL_PV, val.PT_FUEL_PV],
+                        PT_LOX_PV: [...data.PT_LOX_PV, val.PT_LOX_PV],
+                        PT_FUEL_INJ: [...data.PT_FUEL_INJ, val.PT_FUEL_INJ],
+                        PT_CHAM: [...data.PT_CHAM, val.PT_CHAM],
+                        TC_FUEL_PV: [...data.TC_FUEL_PV, val.TC_FUEL_PV],
+                        TC_LOX_PV: [...data.TC_LOX_PV, val.TC_LOX_PV],
+                        TC_LOX_Valve_Main: [...data.TC_LOX_Valve_Main, val.TC_LOX_Valve_Main],
+                        RC_LOX_Level: [...data.RC_LOX_Level, val.RC_LOX_Level],
+                        FT_Thrust: [...data.FT_Thrust, val.FT_Thrust],
+                    }
+                })
+                console.log(data.PT_HE.length)
+                this.setState({
+                    data: {
+                        PT_HE: [...this.state.data.PT_HE, ...data.PT_HE],
+                        PT_Purge: [...this.state.data.PT_Purge, ...data.PT_Purge],
+                        PT_Pneu: [...this.state.data.PT_Pneu, ...data.PT_Pneu],
+                        PT_FUEL_PV: [...this.state.data.PT_FUEL_PV, ...data.PT_FUEL_PV],
+                        PT_LOX_PV: [...this.state.data.PT_LOX_PV, ...data.PT_LOX_PV],
+                        PT_FUEL_INJ: [...this.state.data.PT_FUEL_INJ, ...data.PT_FUEL_INJ],
+                        PT_CHAM: [...this.state.data.PT_CHAM, ...data.PT_CHAM],
+                        TC_FUEL_PV: [...this.state.data.TC_FUEL_PV, ...data.TC_FUEL_PV],
+                        TC_LOX_PV: [...this.state.data.TC_LOX_PV, ...data.TC_LOX_PV],
+                        TC_LOX_Valve_Main: [...this.state.data.TC_LOX_Valve_Main, ...data.TC_LOX_Valve_Main],
+                        RC_LOX_Level: [...this.state.data.RC_LOX_Level, ...data.RC_LOX_Level],
+                        FT_Thrust: [...this.state.data.FT_Thrust, ...data.FT_Thrust],
+                    }
+                })
             }
         }
     }
@@ -121,7 +169,6 @@ class WebSocketList extends Component<{ ws: WebSocket | null }, { data: Data, ti
 
         return (<Grid container>
             <Grid item xs={6}><Chart data={this.state.data.PT_HE} title={"PT_HE"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-            {/* <Divider orientation="vertical" flexItem></Divider> */}
             <Grid item xs={6}><Chart data={this.state.data.PT_Purge} title={"PT_Purge"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
             <Grid item xs={6}><Chart data={this.state.data.PT_Pneu} title={"PT_Pneu"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
             <Grid item xs={6}><Chart data={this.state.data.PT_FUEL_PV} title={"PT_FUEL_PV"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
