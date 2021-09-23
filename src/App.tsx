@@ -1,22 +1,12 @@
-import { Card, CardContent, Grid, makeStyles } from '@material-ui/core';
+import { makeStyles, Grid, Card, CardContent } from '@mui/material';
 import './App.css';
 import WebSocketComponent from './components/websocketcomponent';
 import WebSocketList from './components/websocketlist';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(0),
-    },
-  },
-}));
-
 function App() {
 
-  const classes = useStyles();
-
   return (
-    <div className={classes.root} style={{
+    <div style={{
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',

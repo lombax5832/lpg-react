@@ -1,6 +1,5 @@
+import { makeStyles, Button, Typography } from "@mui/material";
 import React, { useState } from "react"
-import { makeStyles } from '@material-ui/core/styles';
-import { Button, Typography } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -19,8 +18,7 @@ const Page = (props: any) => {
     const { children } = props
 
     const [toggle, setToggle] = useState<boolean>(false);
-
-    const classes = useStyles();
+    
     return (
         <div>
             <Button onClick={() => setToggle(!toggle)} variant="contained"><Typography>Test</Typography></Button>
