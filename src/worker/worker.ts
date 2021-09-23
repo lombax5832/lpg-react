@@ -4,12 +4,8 @@ import { IData } from "../interfaces/data";
 // eslint-disable-next-line no-restricted-globals
 const ctx: Worker = self as any;
 
-// Post data to parent thread
-ctx.postMessage({ foo: "foo" });
-
 // Respond to message from parent thread
 ctx.addEventListener("message", (event) => {
-    ctx.postMessage("starting websocket");
     initWebSocket("ws://localhost:8765", (message) => { ctx.postMessage(message) })
 });
 
@@ -40,7 +36,7 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
 
         let item = JSON.parse(event.data)
         item.message.forEach((val, i) => {
-            console.log(i)
+            // console.log(i)
             data = {
                 PT_HE: [...data.PT_HE, val.PT_HE],
                 PT_Purge: [...data.PT_Purge, val.PT_Purge],

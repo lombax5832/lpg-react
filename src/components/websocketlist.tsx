@@ -68,7 +68,7 @@ class WebSocketList extends Component<{ }, { data: IData, timeout: { status: Boo
         //If there isn't an active timeout and the length of the data set is changed,
         //we can update in 10 milliseconds while refusing to update naturally
         if (this.state.timeout.status == false && this.state.data.PT_HE.length != nextState.data.PT_HE.length) {
-            this.makeTimeout(50);
+            this.makeTimeout(200);
             return false
         }
         //If some other property changed, we can update normally for it here
@@ -83,7 +83,7 @@ class WebSocketList extends Component<{ }, { data: IData, timeout: { status: Boo
         const worker = new Worker()
         worker.postMessage("HEY")
         worker.addEventListener('message', (ev) => {
-            console.log("MESSAGE RECEIVED:", ev)
+            // console.log("MESSAGE RECEIVED:", ev)
             let data = JSON.parse(ev.data)
             this.setState({
                 data: {
@@ -121,18 +121,18 @@ class WebSocketList extends Component<{ }, { data: IData, timeout: { status: Boo
             <Grid item xs={3}><Chart data={this.state.data.PT_Purge} title={"PT_Purge"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
             <Grid item xs={3}><Chart data={this.state.data.PT_Pneu} title={"PT_Pneu"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
             <Grid item xs={3}><Chart data={this.state.data.PT_FUEL_PV} title={"PT_FUEL_PV"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-            <Grid item xs={3}><Chart data={this.state.data.PT_LOX_PV} title={"PT_LOX_PV"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+            {/* <Grid item xs={3}><Chart data={this.state.data.PT_LOX_PV} title={"PT_LOX_PV"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
             {/*<Grid item xs={3}><Chart data={this.state.data.PT_FUEL_INJ} title={"PT_FUEL_INJ"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>*/}
-            <Grid item xs={3}><Chart data={this.state.data.PT_CHAM} title={"PT_CHAM"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+            {/* <Grid item xs={3}><Chart data={this.state.data.PT_CHAM} title={"PT_CHAM"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
             <Grid item xs={3}><Chart data={this.state.data.TC_FUEL_PV} title={"TC_FUEL_PV"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
             <Grid item xs={3}><Chart data={this.state.data.TC_LOX_PV} title={"TC_LOX_PV"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
             <Grid item xs={3}><Chart data={this.state.data.TC_LOX_Valve_Main} title={"TC_LOX_Valve_Main"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
             <Grid item xs={3}><Chart data={this.state.data.TC_WATER_In} title={"TC_WATER_In"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-            <Grid item xs={3}><Chart data={this.state.data.TC_WATER_Out} title={"TC_WATER_Out"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-            <Grid item xs={3}><Chart data={this.state.data.TC_CHAM} title={"TC_CHAM"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+            <Grid item xs={3}><Chart data={this.state.data.TC_WATER_Out} title={"TC_WATER_Out"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid> */}
+            {/* <Grid item xs={3}><Chart data={this.state.data.TC_CHAM} title={"TC_CHAM"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid> */}
             {/*<Grid item xs={3}><Chart data={this.state.data.RC_LOX_Level} title={"RC_LOX_Level"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>*/}
-            <Grid item xs={3}><Chart data={this.state.data.FT_Thrust} title={"FT_Thrust"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-            <Grid item xs={3}><Chart data={this.state.data.FL_WATER} title={"FL_WATER"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+            {/* <Grid item xs={3}><Chart data={this.state.data.FT_Thrust} title={"FT_Thrust"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid> */}
+            {/* <Grid item xs={3}><Chart data={this.state.data.FL_WATER} title={"FL_WATER"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid> */}
         </Grid>)
 
     }
