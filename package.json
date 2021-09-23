@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@types/react": "^17.0.21",
-    "@types/react-plotly.js": "^2.5.0"
+    "@types/react-plotly.js": "^2.5.0",
+    "worker-loader": "^3.0.8"
   }
 }

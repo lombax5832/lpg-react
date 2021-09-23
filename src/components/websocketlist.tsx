@@ -2,23 +2,11 @@ import { Grid } from "@material-ui/core";
 import { Component } from "react";
 import WebSocketContext from "../context/websocketcontext";
 import Chart from "./chart";
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import Worker from 'worker-loader!../worker/worker'
+import { IData } from "../interfaces/data";
 
-interface IData {
-    PT_HE: number[]
-    PT_Purge: number[]
-    PT_Pneu: number[]
-    PT_FUEL_PV: number[]
-    PT_LOX_PV: number[]
-    PT_FUEL_INJ: number[]
-    PT_CHAM: number[]
-    TC_FUEL_PV: number[]
-    TC_LOX_PV: number[]
-    TC_LOX_Valve_Main: number[]
-    RC_LOX_Level: number[]
-    FT_Thrust: number[]
-}
-
-class WebSocketList extends Component<{ ws: WebSocket | null }, { data: IData, timeout: { status: Boolean } }>{
+class WebSocketList extends Component<{ }, { data: IData, timeout: { status: Boolean } }>{
 
     static contextType = WebSocketContext;
 
@@ -86,63 +74,35 @@ class WebSocketList extends Component<{ ws: WebSocket | null }, { data: IData, t
         return false
     }
 
-
+    componentDidMount() {
+        const worker = new Worker()
+        worker.postMessage("HEY")
+        worker.addEventListener('message', (ev) => {
+            console.log("MESSAGE RECEIVED:", ev)
+            let data = JSON.parse(ev.data)
+            this.setState({
+                data: {
+                    PT_HE: [...this.state.data.PT_HE, ...data.PT_HE],
+                    PT_Purge: [...this.state.data.PT_Purge, ...data.PT_Purge],
+                    PT_Pneu: [...this.state.data.PT_Pneu, ...data.PT_Pneu],
+                    PT_FUEL_PV: [...this.state.data.PT_FUEL_PV, ...data.PT_FUEL_PV],
+                    PT_LOX_PV: [...this.state.data.PT_LOX_PV, ...data.PT_LOX_PV],
+                    PT_FUEL_INJ: [...this.state.data.PT_FUEL_INJ, ...data.PT_FUEL_INJ],
+                    PT_CHAM: [...this.state.data.PT_CHAM, ...data.PT_CHAM],
+                    TC_FUEL_PV: [...this.state.data.TC_FUEL_PV, ...data.TC_FUEL_PV],
+                    TC_LOX_PV: [...this.state.data.TC_LOX_PV, ...data.TC_LOX_PV],
+                    TC_LOX_Valve_Main: [...this.state.data.TC_LOX_Valve_Main, ...data.TC_LOX_Valve_Main],
+                    RC_LOX_Level: [...this.state.data.RC_LOX_Level, ...data.RC_LOX_Level],
+                    FT_Thrust: [...this.state.data.FT_Thrust, ...data.FT_Thrust],
+                }
+            })
+        })
+        console.log("SENT MESSAGE")
+    }
 
     componentDidUpdate() {
         console.log("rerender");
-        if (this.props.ws && !this.props.ws.onmessage) {
-            this.props.ws.onmessage = (event: MessageEvent) => {
-                let item = JSON.parse(event.data)
-                let data: IData = {
-                    PT_HE: [],
-                    PT_Purge: [],
-                    PT_Pneu: [],
-                    PT_FUEL_PV: [],
-                    PT_LOX_PV: [],
-                    PT_FUEL_INJ: [],
-                    PT_CHAM: [],
-                    TC_FUEL_PV: [],
-                    TC_LOX_PV: [],
-                    TC_LOX_Valve_Main: [],
-                    RC_LOX_Level: [],
-                    FT_Thrust: []
-                }
-                item.message.forEach((val, i) => {
-                    console.log(i)
-                    data = {
-                        PT_HE: [...data.PT_HE, val.PT_HE],
-                        PT_Purge: [...data.PT_Purge, val.PT_Purge],
-                        PT_Pneu: [...data.PT_Pneu, val.PT_Pneu],
-                        PT_FUEL_PV: [...data.PT_FUEL_PV, val.PT_FUEL_PV],
-                        PT_LOX_PV: [...data.PT_LOX_PV, val.PT_LOX_PV],
-                        PT_FUEL_INJ: [...data.PT_FUEL_INJ, val.PT_FUEL_INJ],
-                        PT_CHAM: [...data.PT_CHAM, val.PT_CHAM],
-                        TC_FUEL_PV: [...data.TC_FUEL_PV, val.TC_FUEL_PV],
-                        TC_LOX_PV: [...data.TC_LOX_PV, val.TC_LOX_PV],
-                        TC_LOX_Valve_Main: [...data.TC_LOX_Valve_Main, val.TC_LOX_Valve_Main],
-                        RC_LOX_Level: [...data.RC_LOX_Level, val.RC_LOX_Level],
-                        FT_Thrust: [...data.FT_Thrust, val.FT_Thrust],
-                    }
-                })
-                console.log(data.PT_HE.length)
-                this.setState({
-                    data: {
-                        PT_HE: [...this.state.data.PT_HE, ...data.PT_HE],
-                        PT_Purge: [...this.state.data.PT_Purge, ...data.PT_Purge],
-                        PT_Pneu: [...this.state.data.PT_Pneu, ...data.PT_Pneu],
-                        PT_FUEL_PV: [...this.state.data.PT_FUEL_PV, ...data.PT_FUEL_PV],
-                        PT_LOX_PV: [...this.state.data.PT_LOX_PV, ...data.PT_LOX_PV],
-                        PT_FUEL_INJ: [...this.state.data.PT_FUEL_INJ, ...data.PT_FUEL_INJ],
-                        PT_CHAM: [...this.state.data.PT_CHAM, ...data.PT_CHAM],
-                        TC_FUEL_PV: [...this.state.data.TC_FUEL_PV, ...data.TC_FUEL_PV],
-                        TC_LOX_PV: [...this.state.data.TC_LOX_PV, ...data.TC_LOX_PV],
-                        TC_LOX_Valve_Main: [...this.state.data.TC_LOX_Valve_Main, ...data.TC_LOX_Valve_Main],
-                        RC_LOX_Level: [...this.state.data.RC_LOX_Level, ...data.RC_LOX_Level],
-                        FT_Thrust: [...this.state.data.FT_Thrust, ...data.FT_Thrust],
-                    }
-                })
-            }
-        }
+
     }
 
     render() {
