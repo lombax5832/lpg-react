@@ -12,29 +12,55 @@ ctx.addEventListener("message", (event) => {
 function initWebSocket(url: string, callback: (message: string) => void): void {
     // Process the data without stalling the UI
 
+    let timeout: boolean = false;
+
+    let data: IData = {
+        PT_HE: [],
+        PT_Purge: [],
+        PT_Pneu: [],
+        PT_FUEL_PV: [],
+        PT_LOX_PV: [],
+        //PT_FUEL_INJ: [],
+        PT_CHAM: [],
+        TC_FUEL_PV: [],
+        TC_LOX_PV: [],
+        TC_LOX_Valve_Main: [],
+        TC_WATER_In: [],
+        TC_WATER_Out: [],
+        TC_CHAM: [],
+        //RC_LOX_Level: [],
+        FT_Thrust: [],
+        FL_WATER: []
+    }
+
     const socket = new WebSocket(url);
 
     socket.addEventListener('message', (event: MessageEvent) => {
-        let data: IData = {
-            PT_HE: [],
-            PT_Purge: [],
-            PT_Pneu: [],
-            PT_FUEL_PV: [],
-            PT_LOX_PV: [],
-            //PT_FUEL_INJ: [],
-            PT_CHAM: [],
-            TC_FUEL_PV: [],
-            TC_LOX_PV: [],
-            TC_LOX_Valve_Main: [],
-            TC_WATER_In: [],
-            TC_WATER_Out: [],
-            TC_CHAM: [],
-            //RC_LOX_Level: [],
-            FT_Thrust: [],
-            FL_WATER: []
-        }
 
         let item = JSON.parse(event.data)
+
+        const flushData = () => {
+            callback(JSON.stringify(data))
+            data = {
+                PT_HE: [],
+                PT_Purge: [],
+                PT_Pneu: [],
+                PT_FUEL_PV: [],
+                PT_LOX_PV: [],
+                //PT_FUEL_INJ: [],
+                PT_CHAM: [],
+                TC_FUEL_PV: [],
+                TC_LOX_PV: [],
+                TC_LOX_Valve_Main: [],
+                TC_WATER_In: [],
+                TC_WATER_Out: [],
+                TC_CHAM: [],
+                //RC_LOX_Level: [],
+                FT_Thrust: [],
+                FL_WATER: []
+            }
+        }
+
         item.message.forEach((val, i) => {
             // console.log(i)
             data = {
@@ -55,8 +81,15 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
                 FT_Thrust: [...data.FT_Thrust, val.FT_Thrust],
                 FL_WATER: [...data.FL_WATER, val.FL_WATER]
             }
+
+            if (i % 2000 == 0) {
+                flushData()
+            }
         })
 
-        callback(JSON.stringify(data))
+        if (!timeout){
+            timeout = true
+            setTimeout(flushData, 50)
+        }
     })
 }
