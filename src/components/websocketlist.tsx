@@ -63,26 +63,6 @@ class WebSocketList extends Component<{ ws: WebSocket | null }, { data: IData, t
         return timeout
     }
 
-    /*
-    addData = (message) => {
-        this.setState({
-            data: {
-                PT_HE: [...this.state.data.PT_HE, message.PT_HE],
-                PT_Purge: [...this.state.data.PT_Purge, message.PT_Purge],
-                PT_Pneu: [...this.state.data.PT_Pneu, message.PT_Pneu],
-                PT_FUEL_PV: [...this.state.data.PT_FUEL_PV, message.PT_FUEL_PV],
-                PT_LOX_PV: [...this.state.data.PT_LOX_PV, message.PT_LOX_PV],
-                PT_FUEL_INJ: [...this.state.data.PT_FUEL_INJ, message.PT_FUEL_INJ],
-                PT_CHAM: [...this.state.data.PT_CHAM, message.PT_CHAM],
-                TC_FUEL_PV: [...this.state.data.TC_FUEL_PV, message.TC_FUEL_PV],
-                TC_LOX_PV: [...this.state.data.TC_LOX_PV, message.TC_LOX_PV],
-                TC_LOX_Valve_Main: [...this.state.data.TC_LOX_Valve_Main, message.TC_LOX_Valve_Main],
-                RC_LOX_Level: [...this.state.data.RC_LOX_Level, message.RC_LOX_Level],
-                FT_Thrust: [...this.state.data.FT_Thrust, message.FT_Thrust],
-            }
-        })
-    }*/
-
     /**
      * 
      * Makes sure that the component isn't queuing renders faster than it can finish rendering
