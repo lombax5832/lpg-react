@@ -1,6 +1,7 @@
 import { Card, CardContent, Grid, makeStyles } from '@material-ui/core';
 import './App.css';
 import WebSocketComponent from './components/websocketcomponent';
+import WebSocketList from './components/websocketlist';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +25,7 @@ function App() {
         <Grid item xs={12}>
           <Card style={{ height: 'auto', overflow: 'auto' }}>
             <CardContent>
-              <WebSocketComponent />
+              <WebSocketList />
             </CardContent>
           </Card>
         </Grid>
