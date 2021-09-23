@@ -89,7 +89,7 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
 
         if (!timeout){
             timeout = true
-            setTimeout(flushData, 50)
+            setTimeout(flushData, 100)
         }
     })
 }

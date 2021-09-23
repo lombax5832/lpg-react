@@ -1,11 +1,11 @@
-import { Component } from "react";
-import WebSocketContext from "../context/websocketcontext";
-import Chart from "./chart";
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import Worker from 'worker-loader!../worker/worker'
-import { IData } from "../interfaces/data";
-import { Box, Grid, Slider, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { Box, Divider, FormControlLabel, FormGroup, Grid, Slider, Stack, Switch, Tab } from "@mui/material";
+import { Component } from "react";
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import Worker from 'worker-loader!../worker/worker';
+import WebSocketContext from "../context/websocketcontext";
+import { IData } from "../interfaces/data";
+import Chart from "./chart";
 
 class WebSocketList extends Component<{}, { data: IData, range: { follow: boolean, value: number[] }, timeout: { status: Boolean }, tab: string }>{
 
@@ -140,7 +140,12 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     </TabList>
                                 </Box>
                             </Grid>
-                            <Slider min={0} max={Math.max(this.state.data.PT_HE.length, 500)} value={this.state.range.value} onChange={(event, vals: number[]) => { this.setState({ range: { follow: false, value: vals } }) }} />
+                            <FormGroup>
+                                <Stack spacing={2} divider={<Divider orientation="vertical" flexItem />} direction='row'>
+                                    <FormControlLabel control={<Switch checked={this.state.range.follow} onChange={(e) => { this.setState({ range: { follow: e.target.checked, value: this.state.range.value } }) }} />} label="Follow" />
+                                    <Slider aria-label="Default" valueLabelDisplay="auto" min={0} max={Math.max(this.state.data.PT_HE.length, 500)} value={this.state.range.value} onChange={(event, vals: number[]) => { this.setState({ range: { follow: false, value: vals } }) }} />
+                                </Stack>
+                            </FormGroup>
                             <TabPanel value="1">
                                 <Grid container item xs={12}>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_HE} title={"PT_HE"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
