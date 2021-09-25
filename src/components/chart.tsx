@@ -12,7 +12,7 @@ class Chart extends Component<{ data: number[], title: string, xaxis: { range: n
 
     render() {
         return (<Plot
-            data={[{ type: 'scatter', y: this.props.data }]} onRelayout={(val) => console.log("Selected", val)}
+            data={[{ type: 'scattergl', y: this.props.data }]} onRelayout={(val) => console.log("Selected", val)}
             layout={{
                 margin: { t: 30, l: 30, b: 30, r: 30 },
                 autosize: true,

@@ -62,7 +62,6 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
         }
 
         item.message.forEach((val, i) => {
-            // console.log(i)
             data = {
                 PT_HE: [...data.PT_HE, val.PT_HE],
                 PT_Purge: [...data.PT_Purge, val.PT_Purge],
@@ -82,14 +81,18 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
                 FL_WATER: [...data.FL_WATER, val.FL_WATER]
             }
 
-            if (i % 2000 == 0) {
+            
+            if ((i + 1) % 2000 === 0) {
                 flushData()
             }
         })
 
-        if (!timeout){
+        if (!timeout) {
             timeout = true
-            setTimeout(flushData, 100)
+            setTimeout(() => {
+                flushData()
+                timeout = false
+            }, 100)
         }
     })
 }
