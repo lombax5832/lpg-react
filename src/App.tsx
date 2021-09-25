@@ -1,6 +1,5 @@
-import { makeStyles, Grid, Card, CardContent } from '@mui/material';
+import { Card, CardContent, Grid } from '@mui/material';
 import './App.css';
-import WebSocketComponent from './components/websocketcomponent';
 import WebSocketList from './components/websocketlist';
 
 function App() {

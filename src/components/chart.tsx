@@ -6,9 +6,6 @@ import createPlotlyComponent from 'react-plotly.js/factory'
 const Plot = createPlotlyComponent(Plotly);
 
 class Chart extends Component<{ data: number[], title: string, xaxis: { range: number[] }, yaxis: { range: number[], title: string } }, {}>{
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (<Plot

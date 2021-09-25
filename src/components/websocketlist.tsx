@@ -1,5 +1,5 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Box, Divider, FormControlLabel, FormGroup, Grid, Slider, Stack, Switch, Tab } from "@mui/material";
+import { Box, Button, Divider, FormControlLabel, FormGroup, Grid, Slider, Stack, Switch, Tab } from "@mui/material";
 import { Component } from "react";
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import Worker from 'worker-loader!../worker/worker';
@@ -178,6 +178,11 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                             </TabPanel>
                         </TabContext>
                     </Box>
+                </Grid>
+                <Grid item container xs={3}>
+                    <Grid item>
+                        <Button variant="contained">Start</Button>
+                    </Grid>
                 </Grid>
                 <Grid container>
                     {/* <Grid item xs={3}><Chart data={this.state.data.PT_HE} title={"PT_HE"} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
