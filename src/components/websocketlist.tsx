@@ -104,12 +104,12 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
     render() {
 
         return (<>
-            <Grid container>
-                <Grid container item xs={9}>
-                    <Box sx={{ width: '100%', typography: 'body1' }}>
+            <Grid container >
+                <Grid container item xs={9} >
+                    <Box sx={{ width: '100%', typography: 'body1' }} style={{ padding: 0 }}>
                         <TabContext value={this.state.tab}>
                             <Grid container item>
-                                <Box  sx={{ borderBottom: 1, borderColor: 'divider', width: 'auto'}}>
+                                <Box  sx={{ borderBottom: 1, borderColor: 'divider', width: '100%'}}>
                                     <TabList variant='fullWidth' onChange={(event, newval) => { this.setState({ tab: newval }) }} aria-label="lab API tabs example">
                                         <Tab label="Item One" value="1" />
                                         <Tab label="Item Two" value="2" />
@@ -120,21 +120,21 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                             </Grid>
                             <Grid>
                                 <FormGroup>
-                                    <Stack spacing={3} style={{ alignItems: 'center' }} divider={<Divider orientation="vertical" flexItem />} direction='row'>
-                                        <FormControlLabel control={<Switch checked={this.state.range.follow} onChange={(e) => { this.setState({ range: { follow: e.target.checked, value: this.state.range.value } }) }} />} label="Follow" />
+                                    <Stack spacing={3} style={{ alignItems: 'center', paddingTop: 5, paddingRight: 20 }} divider={<Divider orientation="vertical" flexItem />} direction='row'>
+                                        <FormControlLabel labelPlacement="start" control={<Switch checked={this.state.range.follow} onChange={(e) => { this.setState({ range: { follow: e.target.checked, value: this.state.range.value } }) }} />} label="Follow" />
                                         <Slider aria-label="Default" valueLabelDisplay="auto" min={0} max={Math.max(this.state.data.PT_HE.length, 500)} value={this.state.range.value} onChange={(event, vals: number[]) => { this.setState({ range: { follow: false, value: vals } }) }} />
                                     </Stack>
                                 </FormGroup>
                             </Grid>
-                            <TabPanel value="1">
+                            <TabPanel value="1" style={{ padding: 10, paddingTop: 5 }}>
                                 <Grid container item xs={12}>
-                                    <Grid item xs={6}><Chart data={this.state.data.PT_HE} title={"PT_HE"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.PT_HE} title={"PT_HE"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }}/></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_Purge} title={"PT_Purge"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_Pneu} title={"PT_Pneu"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_FUEL_PV} title={"PT_FUEL_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
-                            <TabPanel value="2">
+                            <TabPanel value="2" style={{ padding: 10, paddingTop: 5 }}>
                                 <Grid container item xs={12}>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_LOX_PV} title={"PT_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_CHAM} title={"PT_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
@@ -142,7 +142,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     <Grid item xs={6}><Chart data={this.state.data.TC_LOX_PV} title={"TC_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
-                            <TabPanel value="3">
+                            <TabPanel value="3" style={{ padding: 10, paddingTop: 5 }}>
                                 <Grid container item xs={12}>
                                     <Grid item xs={6}><Chart data={this.state.data.TC_LOX_Valve_Main} title={"TC_LOX_Valve_Main"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.TC_WATER_In} title={"TC_WATER_In"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
@@ -150,7 +150,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     <Grid item xs={6}><Chart data={this.state.data.TC_CHAM} title={"TC_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
-                            <TabPanel value="4">
+                            <TabPanel value="4" style={{ padding: 10, paddingTop: 5 }}>
                                 <Grid container item xs={12}>
                                     <Grid item xs={6}><Chart data={this.state.data.FT_Thrust} title={"FT_Thrust"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.FL_WATER} title={"FL_WATER"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
@@ -159,11 +159,11 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                         </TabContext>
                     </Box>
                 </Grid>
-                <Grid item xs={3}>
-                    <Grid item xs={12}>
+                <Grid item xs={3} style={{paddingTop: 10}}>
+                    <Grid>
                         <Diagram></Diagram>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid>
                         <ButtonGrid></ButtonGrid>
                     </Grid>
                 </Grid>

@@ -12,7 +12,7 @@ class ButtonGrid extends Component<{}, {}>{
 
     render() {
         return (
-            <div style={{ padding: 4, borderRadius: 10, border: '2px solid rgba(0, 0, 0, 0.3)',  width: '100%', marginTop: 5, marginLeft: -5 }}>
+            <div style={{ padding: 8, borderRadius: 10, border: '2px solid rgba(0, 0, 0, 0.3)', marginTop: 5 }}>
                 <Grid container style={{ display: 'flex', justifyContent: 'center'}} spacing={1}>
                     <Grid item xs={6}>
                         <Button fullWidth variant="contained" onClick={() => { this.startCaching() }}>

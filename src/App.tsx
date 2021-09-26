@@ -10,10 +10,10 @@ function App() {
       alignItems: 'center',
       justifyContent: 'center',
     }}>
-      <Grid container alignItems='center' justifyContent='center'>
+      <Grid container alignItems='center' justifyContent='center' >
         <Grid item xs={12}>
-          <Card style={{ height: 'auto', overflow: 'auto' }}>
-            <CardContent>
+          <Card>
+            <CardContent style={{paddingTop: 0}}>
               <WebSocketList />
             </CardContent>
           </Card>

@@ -11,7 +11,7 @@ class Chart extends Component<{ data: number[], title: string, xaxis: { range: n
         return (<Plot
             data={[{ type: 'scattergl', y: this.props.data }]} onRelayout={(val) => console.log("Selected", val)}
             layout={{
-                margin: { t: 30, l: 30, b: 30, r: 30 },
+                margin: { t: 30, l: 50, b: 30, r: 30 },
                 autosize: true,
                 // width: 700, 
                 // height: 500, 
@@ -24,7 +24,7 @@ class Chart extends Component<{ data: number[], title: string, xaxis: { range: n
             }}
             style={{
                 width: "100%",
-                height: 400
+                height: 439
             }}
             config={{
                 responsive: true
