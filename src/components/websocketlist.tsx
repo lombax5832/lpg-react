@@ -6,6 +6,7 @@ import Worker from 'worker-loader!../worker/worker';
 import WebSocketContext from "../context/websocketcontext";
 import { IData } from "../interfaces/data";
 import Chart from "./chart";
+import Diagram from "./diagram";
 
 class WebSocketList extends Component<{}, { data: IData, range: { follow: boolean, value: number[] }, timeout: { status: Boolean }, tab: string }>{
 
@@ -59,29 +60,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
         return timeout
     }
 
-    /**
-     * 
-     * Makes sure that the component isn't queuing renders faster than it can finish rendering
-     */
-    /*
-    shouldComponentUpdate(nextProps, nextState) {
-        //We want to update if the timeout status is changing
-        if (this.state.timeout.status != nextState.timeout.status) {
-            return true
-        }
-        //If there isn't an active timeout and the length of the data set is changed,
-        //we can update in 10 milliseconds while refusing to update naturally
-        if (this.state.timeout.status == false && this.state.data.PT_HE.length != nextState.data.PT_HE.length) {
-            this.makeTimeout(200);
-            return false
-        }
-        //If some other property changed, we can update normally for it here
-        else if (this.state.timeout.status == false) {
-            return true
-        }
 
-        return false
-    }*/
 
     componentDidMount() {
         const worker = new Worker()
@@ -119,8 +98,6 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
     }
 
     componentDidUpdate() {
-        console.log("rerender");
-        console.log("follow:", this.state.range.follow)
     }
 
     render() {
@@ -141,7 +118,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                 </Box>
                             </Grid>
                             <FormGroup>
-                                <Stack spacing={2} divider={<Divider orientation="vertical" flexItem />} direction='row'>
+                                <Stack style={{ alignItems: 'center', marginRight: 15 }} spacing={2} divider={<Divider orientation="vertical" flexItem />} direction='row'>
                                     <FormControlLabel control={<Switch checked={this.state.range.follow} onChange={(e) => { this.setState({ range: { follow: e.target.checked, value: this.state.range.value } }) }} />} label="Follow" />
                                     <Slider aria-label="Default" valueLabelDisplay="auto" min={0} max={Math.max(this.state.data.PT_HE.length, 500)} value={this.state.range.value} onChange={(event, vals: number[]) => { this.setState({ range: { follow: false, value: vals } }) }} />
                                 </Stack>
@@ -182,6 +159,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 <Grid item container xs={3}>
                     <Grid item>
                         <Button variant="contained">Start</Button>
+                        <Diagram></Diagram>
                     </Grid>
                 </Grid>
                 <Grid container>
