@@ -9,11 +9,12 @@ class Diagram extends Component<{}, {}>{
 
     render() {
         return (
-            <div style={{ position: 'relative' }}>
-                <img width='100%' style={{ position: 'relative', left: 0, top: 0, zIndex: 0 }} draggable='false' src={process.env.PUBLIC_URL + "/resources/test.png"} />
-                <img width='100%' style={{ position: 'absolute', left: 0, top: 0, zIndex: 1 }} draggable='false' src={process.env.PUBLIC_URL + "/resources/x.png"} />
-
-            </ div>
+            <div style={{ display: 'flex', justifyContent: 'space-around'}}>
+                <div style={{ position: 'relative', width: '80%', height: ''}}>
+                    <img width='100%' style={{ position: 'relative', left: 0, top: 0, zIndex: 0 }} draggable='false' src={process.env.PUBLIC_URL + "/resources/state_default.svg"} />
+                    <img width='100%' style={{ position: 'absolute', left: 0, top: 0, zIndex: 1 }} draggable='false' src={process.env.PUBLIC_URL + "/resources/x.png"} />
+                </div>
+            </div>
         )
     }
 }

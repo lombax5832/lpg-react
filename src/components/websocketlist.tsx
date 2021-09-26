@@ -7,6 +7,7 @@ import WebSocketContext from "../context/websocketcontext";
 import { IData } from "../interfaces/data";
 import Chart from "./chart";
 import Diagram from "./diagram";
+import ButtonGrid from "./buttongrid";
 
 class WebSocketList extends Component<{}, { data: IData, range: { follow: boolean, value: number[] }, timeout: { status: Boolean }, tab: string }>{
 
@@ -100,11 +101,6 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
     componentDidUpdate() {
     }
 
-    startCaching() {
-        console.log("CACHING START")
-        fetch("http://192.168.137.10:3002/serial/caching/START")
-    }
-
     render() {
 
         return (<>
@@ -164,9 +160,9 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 <Grid item container xs={3}>
                     <Grid item>
                         <Diagram></Diagram>
-                        <Button variant="contained" onClick={() => { this.startCaching() }}>
-                            Launch Caching
-                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <ButtonGrid></ButtonGrid>
                     </Grid>
                 </Grid>
             </Grid>
