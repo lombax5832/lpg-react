@@ -109,8 +109,8 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                     <Box sx={{ width: '100%', typography: 'body1' }}>
                         <TabContext value={this.state.tab}>
                             <Grid container item>
-                                <Box sx={{ borderBottom: 1, borderColor: 'divider', width: 'auto' }}>
-                                    <TabList onChange={(event, newval) => { this.setState({ tab: newval }) }} aria-label="lab API tabs example">
+                                <Box  sx={{ borderBottom: 1, borderColor: 'divider', width: 'auto'}}>
+                                    <TabList variant='fullWidth' onChange={(event, newval) => { this.setState({ tab: newval }) }} aria-label="lab API tabs example">
                                         <Tab label="Item One" value="1" />
                                         <Tab label="Item Two" value="2" />
                                         <Tab label="Item Three" value="3" />
@@ -118,12 +118,14 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     </TabList>
                                 </Box>
                             </Grid>
-                            <FormGroup>
-                                <Stack spacing={3} style={{ alignItems: 'center' }} divider={<Divider orientation="vertical" flexItem />} direction='row'>
-                                    <FormControlLabel control={<Switch checked={this.state.range.follow} onChange={(e) => { this.setState({ range: { follow: e.target.checked, value: this.state.range.value } }) }} />} label="Follow" />
-                                    <Slider aria-label="Default" valueLabelDisplay="auto" min={0} max={Math.max(this.state.data.PT_HE.length, 500)} value={this.state.range.value} onChange={(event, vals: number[]) => { this.setState({ range: { follow: false, value: vals } }) }} />
-                                </Stack>
-                            </FormGroup>
+                            <Grid>
+                                <FormGroup>
+                                    <Stack spacing={3} style={{ alignItems: 'center' }} divider={<Divider orientation="vertical" flexItem />} direction='row'>
+                                        <FormControlLabel control={<Switch checked={this.state.range.follow} onChange={(e) => { this.setState({ range: { follow: e.target.checked, value: this.state.range.value } }) }} />} label="Follow" />
+                                        <Slider aria-label="Default" valueLabelDisplay="auto" min={0} max={Math.max(this.state.data.PT_HE.length, 500)} value={this.state.range.value} onChange={(event, vals: number[]) => { this.setState({ range: { follow: false, value: vals } }) }} />
+                                    </Stack>
+                                </FormGroup>
+                            </Grid>
                             <TabPanel value="1">
                                 <Grid container item xs={12}>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_HE} title={"PT_HE"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
@@ -157,11 +159,11 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                         </TabContext>
                     </Box>
                 </Grid>
-                <Grid item container xs={3}>
-                    <Grid item>
+                <Grid item xs={3}>
+                    <Grid item xs={12}>
                         <Diagram></Diagram>
                     </Grid>
-                    <Grid item>
+                    <Grid item xs={12}>
                         <ButtonGrid></ButtonGrid>
                     </Grid>
                 </Grid>

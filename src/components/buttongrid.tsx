@@ -1,5 +1,7 @@
-import { Grid, Button } from "@mui/material";
+import { Grid, Button, Typography } from "@mui/material";
+import { green } from "@mui/material/colors";
 import zIndex from "@mui/material/styles/zIndex";
+import { width } from "@mui/system";
 import { Component } from "react";
 
 class ButtonGrid extends Component<{}, {}>{
@@ -10,13 +12,47 @@ class ButtonGrid extends Component<{}, {}>{
 
     render() {
         return (
-            <Grid>
-                <Grid>
-                    <Button variant="contained" onClick={() => { this.startCaching() }}>
-                        Launch Caching
-                    </Button>
+            <div style={{ padding: 4, borderRadius: 10, border: '2px solid rgba(0, 0, 0, 0.3)',  width: '100%', marginTop: 5, marginLeft: -5 }}>
+                <Grid container style={{ display: 'flex', justifyContent: 'center'}} spacing={1}>
+                    <Grid item xs={6}>
+                        <Button fullWidth variant="contained" onClick={() => { this.startCaching() }}>
+                            FUEL-Press
+                        </Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Button fullWidth variant="contained" onClick={() => { this.startCaching() }}>
+                            LOX-Press
+                        </Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Button fullWidth variant="contained" onClick={() => { this.startCaching() }}>
+                            FUEL-Vent
+                        </Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Button fullWidth variant="contained" onClick={() => { this.startCaching() }}>
+                            LOX-Vent
+                        </Button>
+                    </Grid>
+                    
+                    <Grid item xs={12} style={{columnSpan: 'all'}}>
+                        <Button fullWidth variant="contained" onClick={() => { this.startCaching() }}>
+                            MAIN
+                        </Button>
+                    </Grid>
+
+                    <Grid item xs={6}>
+                        <Button fullWidth variant="contained" onClick={() => { this.startCaching() }}>
+                            FUEL-Purge
+                        </Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Button fullWidth variant="contained" onClick={() => { this.startCaching() }}>
+                            LOX-Purge
+                        </Button>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </div>
         )
     }
 }

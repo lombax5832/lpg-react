@@ -24,7 +24,7 @@ class Chart extends Component<{ data: number[], title: string, xaxis: { range: n
             }}
             style={{
                 width: "100%",
-                height: 500
+                height: 400
             }}
             config={{
                 responsive: true
