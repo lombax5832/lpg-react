@@ -123,6 +123,11 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
         console.log("follow:", this.state.range.follow)
     }
 
+    startCaching() {
+        console.log("CACHING START")
+        fetch("http://192.168.137.10:3002/serial/caching/START")
+    }
+
     render() {
 
         return (<>
@@ -141,7 +146,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                 </Box>
                             </Grid>
                             <FormGroup>
-                                <Stack spacing={2} divider={<Divider orientation="vertical" flexItem />} direction='row'>
+                                <Stack spacing={3} style={{ alignItems: 'center' }} divider={<Divider orientation="vertical" flexItem />} direction='row'>
                                     <FormControlLabel control={<Switch checked={this.state.range.follow} onChange={(e) => { this.setState({ range: { follow: e.target.checked, value: this.state.range.value } }) }} />} label="Follow" />
                                     <Slider aria-label="Default" valueLabelDisplay="auto" min={0} max={Math.max(this.state.data.PT_HE.length, 500)} value={this.state.range.value} onChange={(event, vals: number[]) => { this.setState({ range: { follow: false, value: vals } }) }} />
                                 </Stack>
@@ -181,7 +186,9 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 </Grid>
                 <Grid item container xs={3}>
                     <Grid item>
-                        <Button variant="contained">Start</Button>
+                        <Button variant="contained" onClick={() => {this.startCaching()}}>
+                            Launch Caching
+                        </Button>
                     </Grid>
                 </Grid>
                 <Grid container>
