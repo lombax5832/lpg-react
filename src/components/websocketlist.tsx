@@ -105,7 +105,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                 <FormGroup>
                                     <Stack spacing={3} style={{ alignItems: 'center', paddingTop: 5, paddingRight: 20 }} divider={<Divider orientation="vertical" flexItem />} direction='row'>
                                         <FormControlLabel labelPlacement="start" control={<Switch checked={this.state.range.follow} onChange={(e) => { this.setState({ range: { follow: e.target.checked, value: this.state.range.value } }) }} />} label="Follow" />
-                                        <Slider aria-label="Default" valueLabelDisplay="auto" min={0} max={Math.max(this.state.data.PT_HE.length, 500)} value={this.state.range.value} onChange={(event, vals: number[]) => { this.setState({ range: { follow: false, value: vals } }) }} />
+                                        <Slider aria-label="Default" valueLabelDisplay="auto" min={0} max={Math.max(this.state.data.PT_HE.length, 3)} value={this.state.range.value} onChange={(event, vals: number[]) => { this.setState({ range: { follow: false, value: vals } }) }} />
                                     </Stack>
                                 </FormGroup>
                             </Grid>
