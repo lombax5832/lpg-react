@@ -1,4 +1,3 @@
-import zIndex from "@mui/material/styles/zIndex";
 import { Component } from "react";
 
 class Diagram extends Component<{}, {}>{

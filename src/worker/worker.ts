@@ -13,8 +13,10 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
     // Process the data without stalling the UI
 
     let timeout: boolean = false;
+    let startTime: number = Number.MAX_SAFE_INTEGER
 
     let data: IData = {
+        Timestamp: [],
         PT_HE: [],
         PT_Purge: [],
         PT_Pneu: [],
@@ -42,6 +44,7 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
         const flushData = () => {
             callback(JSON.stringify(data))
             data = {
+                Timestamp: [],
                 PT_HE: [],
                 PT_Purge: [],
                 PT_Pneu: [],
@@ -62,7 +65,9 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
         }
 
         item.message.forEach((val, i) => {
+            startTime = Math.min(startTime, val.Timestamp)
             data = {
+                Timestamp: [...data.Timestamp, (val.Timestamp - startTime) / 1000],
                 PT_HE: [...data.PT_HE, val.PT_HE],
                 PT_Purge: [...data.PT_Purge, val.PT_Purge],
                 PT_Pneu: [...data.PT_Pneu, val.PT_Pneu],
@@ -81,7 +86,7 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
                 FL_WATER: [...data.FL_WATER, val.FL_WATER]
             }
 
-            
+
             if ((i + 1) % 2000 === 0) {
                 flushData()
             }

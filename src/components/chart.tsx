@@ -5,11 +5,11 @@ import createPlotlyComponent from 'react-plotly.js/factory'
 
 const Plot = createPlotlyComponent(Plotly);
 
-class Chart extends Component<{ data: number[], title: string, xaxis: { range: number[] }, yaxis: { range: number[], title: string } }, {}>{
+class Chart extends Component<{ data: number[], timestamp: number[], title: string, xaxis: { range: number[] }, yaxis: { range: number[], title: string } }, {}>{
 
     render() {
         return (<Plot
-            data={[{ type: 'scattergl', y: this.props.data }]} onRelayout={(val) => console.log("Selected", val)}
+            data={[{ type: 'scattergl', x: this.props.timestamp, y: this.props.data }]} onRelayout={(val) => console.log("Selected", val)}
             layout={{
                 margin: { t: 30, l: 50, b: 30, r: 30 },
                 autosize: true,

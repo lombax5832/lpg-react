@@ -1,13 +1,13 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Box, Button, Divider, FormControlLabel, FormGroup, Grid, Slider, Stack, Switch, Tab } from "@mui/material";
+import { Box, Divider, FormControlLabel, FormGroup, Grid, Slider, Stack, Switch, Tab } from "@mui/material";
 import { Component } from "react";
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import Worker from 'worker-loader!../worker/worker';
 import WebSocketContext from "../context/websocketcontext";
 import { IData } from "../interfaces/data";
+import ButtonGrid from "./buttongrid";
 import Chart from "./chart";
 import Diagram from "./diagram";
-import ButtonGrid from "./buttongrid";
 
 class WebSocketList extends Component<{}, { data: IData, range: { follow: boolean, value: number[] }, timeout: { status: Boolean }, tab: string }>{
 
@@ -21,8 +21,9 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
             timeout: {
                 status: false
             },
-            range: { follow: true, value: [0, 500] },
+            range: { follow: true, value: [0, 3] },
             data: {
+                Timestamp: [],
                 PT_HE: [],
                 PT_Purge: [],
                 PT_Pneu: [],
@@ -44,25 +45,6 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
         }
     }
 
-    /**
-     * 
-     * Utility function to help prevent rendering excessively
-     * 
-     * @param time time in milliseconds to set the timeout for
-     * @returns void
-     */
-    makeTimeout(time: number) {
-        this.setState({ timeout: { status: true } })
-
-        let timeout = setTimeout(() => {
-            this.forceUpdate();
-            this.setState({ timeout: { status: false } })
-        }, time);
-        return timeout
-    }
-
-
-
     componentDidMount() {
         const worker = new Worker()
         worker.postMessage("HEY")
@@ -71,11 +53,12 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
             let data = JSON.parse(ev.data)
             let newRange = this.state.range
             if (newRange.follow) {
-                newRange.value = [Math.max(this.state.data.PT_HE.length + data.PT_HE.length - 500, 0), Math.max(this.state.data.PT_HE.length + data.PT_HE.length, 500)]
+                newRange.value = [Math.max(this.state.data.Timestamp[this.state.data.Timestamp.length - 1] - 3, 0), Math.max(this.state.data.Timestamp[this.state.data.Timestamp.length - 1], 3)]
             }
             this.setState({
                 range: newRange,
                 data: {
+                    Timestamp: [...this.state.data.Timestamp, ...data.Timestamp],
                     PT_HE: [...this.state.data.PT_HE, ...data.PT_HE],
                     PT_Purge: [...this.state.data.PT_Purge, ...data.PT_Purge],
                     PT_Pneu: [...this.state.data.PT_Pneu, ...data.PT_Pneu],
@@ -109,7 +92,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                     <Box sx={{ width: '100%', typography: 'body1' }} style={{ padding: 0 }}>
                         <TabContext value={this.state.tab}>
                             <Grid container item>
-                                <Box  sx={{ borderBottom: 1, borderColor: 'divider', width: '100%'}}>
+                                <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%' }}>
                                     <TabList variant='fullWidth' onChange={(event, newval) => { this.setState({ tab: newval }) }} aria-label="lab API tabs example">
                                         <Tab label="Item One" value="1" />
                                         <Tab label="Item Two" value="2" />
@@ -128,38 +111,38 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                             </Grid>
                             <TabPanel value="1" style={{ padding: 10, paddingTop: 5 }}>
                                 <Grid container item xs={12}>
-                                    <Grid item xs={6}><Chart data={this.state.data.PT_HE} title={"PT_HE"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }}/></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.PT_Purge} title={"PT_Purge"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.PT_Pneu} title={"PT_Pneu"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.PT_FUEL_PV} title={"PT_FUEL_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.PT_HE} timestamp={this.state.data.Timestamp} title={"PT_HE"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.PT_Purge} timestamp={this.state.data.Timestamp} title={"PT_Purge"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.PT_Pneu} timestamp={this.state.data.Timestamp} title={"PT_Pneu"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.PT_FUEL_PV} timestamp={this.state.data.Timestamp} title={"PT_FUEL_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
                             <TabPanel value="2" style={{ padding: 10, paddingTop: 5 }}>
                                 <Grid container item xs={12}>
-                                    <Grid item xs={6}><Chart data={this.state.data.PT_LOX_PV} title={"PT_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.PT_CHAM} title={"PT_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.TC_FUEL_PV} title={"TC_FUEL_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.TC_LOX_PV} title={"TC_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.PT_LOX_PV} timestamp={this.state.data.Timestamp} title={"PT_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.PT_CHAM} timestamp={this.state.data.Timestamp} title={"PT_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.TC_FUEL_PV} timestamp={this.state.data.Timestamp} title={"TC_FUEL_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.TC_LOX_PV} timestamp={this.state.data.Timestamp} title={"TC_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
                             <TabPanel value="3" style={{ padding: 10, paddingTop: 5 }}>
                                 <Grid container item xs={12}>
-                                    <Grid item xs={6}><Chart data={this.state.data.TC_LOX_Valve_Main} title={"TC_LOX_Valve_Main"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.TC_WATER_In} title={"TC_WATER_In"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.TC_WATER_Out} title={"TC_WATER_Out"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.TC_CHAM} title={"TC_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.TC_LOX_Valve_Main} timestamp={this.state.data.Timestamp} title={"TC_LOX_Valve_Main"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.TC_WATER_In} timestamp={this.state.data.Timestamp} title={"TC_WATER_In"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.TC_WATER_Out} timestamp={this.state.data.Timestamp} title={"TC_WATER_Out"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.TC_CHAM} timestamp={this.state.data.Timestamp} title={"TC_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
                             <TabPanel value="4" style={{ padding: 10, paddingTop: 5 }}>
                                 <Grid container item xs={12}>
-                                    <Grid item xs={6}><Chart data={this.state.data.FT_Thrust} title={"FT_Thrust"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.FL_WATER} title={"FL_WATER"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.FT_Thrust} timestamp={this.state.data.Timestamp} title={"FT_Thrust"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.FL_WATER} timestamp={this.state.data.Timestamp} title={"FL_WATER"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
                         </TabContext>
                     </Box>
                 </Grid>
-                <Grid item xs={3} style={{paddingTop: 10}}>
+                <Grid item xs={3} style={{ paddingTop: 10 }}>
                     <Grid>
                         <Diagram></Diagram>
                     </Grid>

@@ -1,4 +1,5 @@
 export interface IData {
+    Timestamp: number[]
     PT_HE: number[]
     PT_Purge: number[]
     PT_Pneu: number[]
