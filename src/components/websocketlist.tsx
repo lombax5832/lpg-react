@@ -5,11 +5,12 @@ import { Component } from "react";
 import Worker from 'worker-loader!../worker/worker';
 import WebSocketContext from "../context/websocketcontext";
 import { IData } from "../interfaces/data";
+import { ButtonState } from "../interfaces/buttonstate";
 import ButtonGrid from "./buttongrid";
 import Chart from "./chart";
 import Diagram from "./diagram";
 
-class WebSocketList extends Component<{}, { data: IData, range: { follow: boolean, value: number[] }, timeout: { status: Boolean }, tab: string }>{
+class WebSocketList extends Component<{}, { data: IData, range: { follow: boolean, value: number[] }, timeout: { status: Boolean }, tab: string, buttonState: ButtonState}>{
 
 
     static contextType = WebSocketContext;
@@ -40,6 +41,15 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 //RC_LOX_Level: [],
                 FT_Thrust: [],
                 FL_WATER: []
+            },
+            buttonState: {
+                FUEL_Press: false,
+                LOX_Press: false,
+                FUEL_Vent: true,
+                LOX_Vent: true,
+                MAIN: false,
+                FUEL_Purge: false,
+                LOX_Purge: false
             },
             tab: '1'
         }
@@ -147,7 +157,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                         <Diagram></Diagram>
                     </Grid>
                     <Grid>
-                        <ButtonGrid></ButtonGrid>
+                        <ButtonGrid buttonState={this.state.buttonState}></ButtonGrid>
                     </Grid>
                 </Grid>
             </Grid>
