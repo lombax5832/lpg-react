@@ -10,7 +10,7 @@ import ButtonGrid from "./buttongrid";
 import Chart from "./chart";
 import Diagram from "./diagram";
 
-class WebSocketList extends Component<{}, { data: IData, range: { follow: boolean, value: number[] }, timeout: { status: Boolean }, tab: string, buttonState: ButtonState}>{
+class WebSocketList extends Component<{}, { data: IData, range: { follow: boolean, value: number[] }, timeout: { status: Boolean }, tab: string, buttonState: ButtonState }>{
 
 
     static contextType = WebSocketContext;
@@ -60,33 +60,38 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
         worker.postMessage("HEY")
         worker.addEventListener('message', (ev) => {
             // console.log("MESSAGE RECEIVED:", ev)
-            let data = JSON.parse(ev.data)
-            let newRange = this.state.range
-            if (newRange.follow) {
-                newRange.value = [Math.max(this.state.data.Timestamp[this.state.data.Timestamp.length - 1] - 3, 0), Math.max(this.state.data.Timestamp[this.state.data.Timestamp.length - 1], 3)]
-            }
-            this.setState({
-                range: newRange,
-                data: {
-                    Timestamp: [...this.state.data.Timestamp, ...data.Timestamp],
-                    PT_HE: [...this.state.data.PT_HE, ...data.PT_HE],
-                    PT_Purge: [...this.state.data.PT_Purge, ...data.PT_Purge],
-                    PT_Pneu: [...this.state.data.PT_Pneu, ...data.PT_Pneu],
-                    PT_FUEL_PV: [...this.state.data.PT_FUEL_PV, ...data.PT_FUEL_PV],
-                    PT_LOX_PV: [...this.state.data.PT_LOX_PV, ...data.PT_LOX_PV],
-                    //PT_FUEL_INJ: [...this.state.data.PT_FUEL_INJ, ...data.PT_FUEL_INJ],
-                    PT_CHAM: [...this.state.data.PT_CHAM, ...data.PT_CHAM],
-                    TC_FUEL_PV: [...this.state.data.TC_FUEL_PV, ...data.TC_FUEL_PV],
-                    TC_LOX_PV: [...this.state.data.TC_LOX_PV, ...data.TC_LOX_PV],
-                    TC_LOX_Valve_Main: [...this.state.data.TC_LOX_Valve_Main, ...data.TC_LOX_Valve_Main],
-                    TC_WATER_In: [...this.state.data.TC_WATER_In, ...data.TC_WATER_In],
-                    TC_WATER_Out: [...this.state.data.TC_WATER_Out, ...data.TC_WATER_Out],
-                    TC_CHAM: [...this.state.data.TC_CHAM, ...data.TC_CHAM],
-                    //RC_LOX_Level: [...this.state.data.RC_LOX_Level, ...data.RC_LOX_Level],
-                    FT_Thrust: [...this.state.data.FT_Thrust, ...data.FT_Thrust],
-                    FL_WATER: [...this.state.data.FL_WATER, ...data.FL_WATER]
+            if (ev.data) {
+                let data = JSON.parse(ev.data)
+                let newRange = this.state.range
+                if (newRange.follow) {
+                    newRange.value = [Math.max(this.state.data.Timestamp[this.state.data.Timestamp.length - 1] - 3, 0), Math.max(this.state.data.Timestamp[this.state.data.Timestamp.length - 1], 3)]
                 }
-            })
+                this.setState({
+                    range: newRange,
+                    data: {
+                        Timestamp: [...this.state.data.Timestamp, ...data.Timestamp],
+                        PT_HE: [...this.state.data.PT_HE, ...data.PT_HE],
+                        PT_Purge: [...this.state.data.PT_Purge, ...data.PT_Purge],
+                        PT_Pneu: [...this.state.data.PT_Pneu, ...data.PT_Pneu],
+                        PT_FUEL_PV: [...this.state.data.PT_FUEL_PV, ...data.PT_FUEL_PV],
+                        PT_LOX_PV: [...this.state.data.PT_LOX_PV, ...data.PT_LOX_PV],
+                        //PT_FUEL_INJ: [...this.state.data.PT_FUEL_INJ, ...data.PT_FUEL_INJ],
+                        PT_CHAM: [...this.state.data.PT_CHAM, ...data.PT_CHAM],
+                        TC_FUEL_PV: [...this.state.data.TC_FUEL_PV, ...data.TC_FUEL_PV],
+                        TC_LOX_PV: [...this.state.data.TC_LOX_PV, ...data.TC_LOX_PV],
+                        TC_LOX_Valve_Main: [...this.state.data.TC_LOX_Valve_Main, ...data.TC_LOX_Valve_Main],
+                        TC_WATER_In: [...this.state.data.TC_WATER_In, ...data.TC_WATER_In],
+                        TC_WATER_Out: [...this.state.data.TC_WATER_Out, ...data.TC_WATER_Out],
+                        TC_CHAM: [...this.state.data.TC_CHAM, ...data.TC_CHAM],
+                        //RC_LOX_Level: [...this.state.data.RC_LOX_Level, ...data.RC_LOX_Level],
+                        FT_Thrust: [...this.state.data.FT_Thrust, ...data.FT_Thrust],
+                        FL_WATER: [...this.state.data.FL_WATER, ...data.FL_WATER]
+                    }
+                })
+            } else {
+                //this.setState({})
+                console.log(ev)
+            }
         })
         console.log("SENT MESSAGE")
     }
