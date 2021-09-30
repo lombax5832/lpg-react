@@ -14,7 +14,8 @@ class ButtonGrid extends Component<{buttonState: ButtonState}, {}>{
     sendUpdate(newButtonState: ButtonState) {
         // Creating XHR object
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://65.78.156.235" + ":3003/serial/valve/update", true);
+        // xhr.open("POST", "http://65.78.156.235" + ":3003/serial/valve/update", true);
+        xhr.open("POST", PI_IP + ":3003/serial/valve/update", true);
         console.log(PI_IP+":3003/serial/valve/update")
 
         // Set the request header i.e. which type of content you are sending
@@ -30,7 +31,7 @@ class ButtonGrid extends Component<{buttonState: ButtonState}, {}>{
 
         // Converting JSON data to string
         var data = JSON.stringify(newButtonState);
-
+        console.log(data);
         // Sending data with the request
         xhr.send(data);
     }
