@@ -6,7 +6,7 @@ import { PI_IP } from "../constants";
 class ButtonGrid extends Component<{buttonState: ButtonState}, {}>{
 
     toggleState(key: keyof ButtonState) {
-        let newButtonState: ButtonState = { ...this.props.buttonState }
+        let newButtonState: ButtonState = JSON.parse(JSON.stringify(this.props.buttonState))
         newButtonState[key] = !newButtonState[key]
         this.sendUpdate(newButtonState)
     }
@@ -16,7 +16,7 @@ class ButtonGrid extends Component<{buttonState: ButtonState}, {}>{
         let xhr = new XMLHttpRequest();
         // xhr.open("POST", "http://65.78.156.235" + ":3003/serial/valve/update", true);
         xhr.open("POST", PI_IP + ":3003/serial/valve/update", true);
-        console.log(PI_IP+":3003/serial/valve/update")
+        // console.log(PI_IP+":3003/serial/valve/update")
 
         // Set the request header i.e. which type of content you are sending
         xhr.setRequestHeader("Content-Type", "application/json");

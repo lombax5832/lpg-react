@@ -59,9 +59,10 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
         const worker = new Worker()
         worker.postMessage("HEY")
         worker.addEventListener('message', (ev) => {
-            // console.log("MESSAGE RECEIVED:", ev)
-            if (ev.data) {
-                let data = JSON.parse(ev.data)
+            console.log("MESSAGE RECEIVED:", ev)
+            let data = JSON.parse(ev.data)
+            if (data.PT_HE) {
+
                 let newRange = this.state.range
                 if (newRange.follow) {
                     newRange.value = [Math.max(this.state.data.Timestamp[this.state.data.Timestamp.length - 1] - 3, 0), Math.max(this.state.data.Timestamp[this.state.data.Timestamp.length - 1], 3)]
@@ -88,8 +89,18 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                         FL_WATER: [...this.state.data.FL_WATER, ...data.FL_WATER]
                     }
                 })
-            } else {
-                //this.setState({})
+            } else if (data.FUEL_Press) {
+                this.setState({
+                    buttonState: {
+                        FUEL_Press: data.FUEL_Press == 48 ? false : true, //CURSED
+                        LOX_Press: data.LOX_Press == 48 ? false : true, //CURSED
+                        FUEL_Vent: data.FUEL_Vent == 48 ? false : true, //VERY CURSED
+                        LOX_Vent: data.LOX_Vent == 48 ? false : true,  //UNHOLY
+                        MAIN: data.MAIN == 48 ? false : true, //EVIL TERNARY OPERATOR HACK
+                        FUEL_Purge: data.FUEL_Purge == 48 ? false : true,  //NOT GOOD
+                        LOX_Purge: data.LOX_Purge == 48 ? false : true  //BAD
+                    }
+                })
                 console.log(ev)
             }
         })

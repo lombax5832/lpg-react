@@ -39,6 +39,7 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
 
     socket.addEventListener('message', (event: MessageEvent) => {
 
+        console.log(event.data)
         let item = JSON.parse(event.data)
 
         const flushData = () => {
@@ -108,8 +109,8 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
         }
 
 
-        if (item.message.FUEL_Press) {
-            sendButtonState(item.message)
+        if (item.message[0]?.FUEL_Press) {
+            sendButtonState(item.message.pop())
         }
 
     })
