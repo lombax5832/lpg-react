@@ -92,13 +92,13 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
             } else if (data.FUEL_Press) {
                 this.setState({
                     buttonState: {
-                        FUEL_Press: data.FUEL_Press == 48 ? false : true, //CURSED
-                        LOX_Press: data.LOX_Press == 48 ? false : true, //CURSED
-                        FUEL_Vent: data.FUEL_Vent == 48 ? false : true, //VERY CURSED
-                        LOX_Vent: data.LOX_Vent == 48 ? false : true,  //UNHOLY
-                        MAIN: data.MAIN == 48 ? false : true, //EVIL TERNARY OPERATOR HACK
-                        FUEL_Purge: data.FUEL_Purge == 48 ? false : true,  //NOT GOOD
-                        LOX_Purge: data.LOX_Purge == 48 ? false : true  //BAD
+                        FUEL_Press: data.FUEL_Press == 48 ? false : true,   //CURSED
+                        LOX_Press: data.LOX_Press == 48 ? false : true,     //CURSED
+                        FUEL_Vent: data.FUEL_Vent == 48 ? false : true,     //VERY CURSED
+                        LOX_Vent: data.LOX_Vent == 48 ? false : true,       //UNHOLY
+                        MAIN: data.MAIN == 48 ? false : true,               //EVIL TERNARY OPERATOR HACK
+                        FUEL_Purge: data.FUEL_Purge == 48 ? false : true,   //NOT GOOD
+                        LOX_Purge: data.LOX_Purge == 48 ? false : true      //BAD
                     }
                 })
                 console.log(ev)

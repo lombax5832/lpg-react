@@ -24,7 +24,8 @@ class ButtonGrid extends Component<{ buttonState: ButtonState }, { currentState:
         setInterval(() => {
             if (!this.state.currentState) {
                 let xhr = new XMLHttpRequest();
-                xhr.open("GET", PI_IP + ":3003/serial/valve/update", true);
+                xhr.open("GET", "http://65.78.156.235" + ":3003/serial/valve/update", true);
+                // xhr.open("GET", PI_IP + ":3005/serial/valve/update", true);
             }
         }, 1000)
     }
@@ -38,8 +39,8 @@ class ButtonGrid extends Component<{ buttonState: ButtonState }, { currentState:
     sendUpdate(newLoadingButtonState: ButtonState) {
         // Creating XHR object
         let xhr = new XMLHttpRequest();
-        // xhr.open("POST", "http://65.78.156.235" + ":3003/serial/valve/update", true);
-        xhr.open("POST", PI_IP + ":3003/serial/valve/update", true);
+        xhr.open("POST", "http://65.78.156.235" + ":3003/serial/valve/update", true);
+        // xhr.open("POST", PI_IP + ":3005/serial/valve/update", true);
         // console.log(PI_IP+":3003/serial/valve/update")
 
         // Set the request header i.e. which type of content you are sending
