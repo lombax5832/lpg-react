@@ -43,7 +43,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 FL_WATER: []
             },
             buttonState: {
-                FUEL_Press: false,
+                FUEL_Press: true,
                 LOX_Press: false,
                 FUEL_Vent: true,
                 LOX_Vent: true,
@@ -170,10 +170,10 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 </Grid>
                 <Grid item xs={3} style={{ paddingTop: 10 }}>
                     <Grid>
-                        <Diagram></Diagram>
+                        <Diagram buttonState={this.state.buttonState} />
                     </Grid>
                     <Grid>
-                        <ButtonGrid buttonState={this.state.buttonState}></ButtonGrid>
+                        <ButtonGrid buttonState={this.state.buttonState} />
                     </Grid>
                 </Grid>
             </Grid>

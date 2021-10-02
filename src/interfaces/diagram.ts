@@ -1,13 +1,13 @@
 export interface IDiagramStates {
+    name: string,
     red: string,
     green: string,
-    neutral: string,
-    setting: "red" | "green" | "neutral"
+    neutral: string
 }
 
 export interface IDiagram {
     baseImage: string
-    Fuel_Press: IDiagramStates
+    FUEL_Press: IDiagramStates
     LOX_Press: IDiagramStates
     FUEL_Vent: IDiagramStates
     LOX_Vent: IDiagramStates
@@ -15,3 +15,15 @@ export interface IDiagram {
     FUEL_Purge: IDiagramStates
     LOX_Purge: IDiagramStates
 }
+
+export interface IDiagramState {
+    FUEL_Press: DiagramState
+    LOX_Press: DiagramState
+    FUEL_Vent: DiagramState
+    LOX_Vent: DiagramState
+    MAIN: DiagramState
+    FUEL_Purge: DiagramState
+    LOX_Purge: DiagramState
+}
+
+type DiagramState = "red" | "green" | "neutral"
