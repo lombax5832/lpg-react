@@ -20,6 +20,15 @@ class ButtonGrid extends Component<{ buttonState: ButtonState }, { currentState:
         this.sendUpdate(newLoadingButtonState)
     }
 
+    componentDidMount() {
+        setInterval(() => {
+            if (!this.state.currentState) {
+                let xhr = new XMLHttpRequest();
+                xhr.open("GET", PI_IP + ":3003/serial/valve/update", true);
+            }
+        }, 1000)
+    }
+
     componentDidUpdate(prevProps) {
         if (JSON.stringify(prevProps.buttonState) != JSON.stringify(this.props.buttonState)) {
             this.setState({ currentState: true })
