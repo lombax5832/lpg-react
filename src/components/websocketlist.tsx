@@ -60,7 +60,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
         const worker = new Worker()
         worker.postMessage("HEY")
         worker.addEventListener('message', (ev) => {
-            console.log("MESSAGE RECEIVED:", ev)
+            // console.log("MESSAGE RECEIVED:", ev)
             let data = JSON.parse(ev.data)
             if (data.PT_HE) {
 
@@ -103,10 +103,10 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                         LOX_Purge: data.LOX_Purge == 48 ? false : true  //BAD
                     }
                 })
-                console.log(ev)
+                // console.log(ev)
             }
         })
-        console.log("SENT MESSAGE")
+        // console.log("SENT MESSAGE")
     }
 
     componentDidUpdate() {

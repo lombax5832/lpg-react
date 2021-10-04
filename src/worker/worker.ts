@@ -49,7 +49,7 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
 
     socket.addEventListener('message', (event: MessageEvent) => {
 
-        console.log(event.data)
+        // console.log(event.data)
         let item = JSON.parse(event.data)
 
         const flushData = () => {
@@ -114,7 +114,7 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
                 setTimeout(() => {
                     flushData()
                     timeout = false
-                }, 100)
+                }, 500)
             }
         }
 
