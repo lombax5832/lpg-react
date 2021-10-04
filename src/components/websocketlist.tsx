@@ -43,6 +43,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 FL_WATER: []
             },
             buttonState: {
+                Timestamp: 0,
                 FUEL_Press: true,
                 LOX_Press: false,
                 FUEL_Vent: true,
@@ -92,6 +93,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
             } else if (data.FUEL_Press) {
                 this.setState({
                     buttonState: {
+                        Timestamp: data.Timestamp,
                         FUEL_Press: data.FUEL_Press == 48 ? false : true, //CURSED
                         LOX_Press: data.LOX_Press == 48 ? false : true, //CURSED
                         FUEL_Vent: data.FUEL_Vent == 48 ? false : true, //VERY CURSED

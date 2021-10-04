@@ -37,6 +37,16 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
 
     const socket = new WebSocket(url);
 
+    socket.onerror = err => {
+        console.error(
+            "Socket encountered error: ",
+            err,
+            "Closing socket"
+        );
+
+        socket.close();
+    };
+
     socket.addEventListener('message', (event: MessageEvent) => {
 
         console.log(event.data)

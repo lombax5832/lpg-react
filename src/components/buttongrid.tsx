@@ -13,7 +13,7 @@ class ButtonGrid extends Component<{ buttonState: ButtonState }, { currentState:
         }
     }
 
-    toggleState(key: keyof ButtonState) {
+    toggleState(key: string) {
         let newLoadingButtonState: ButtonState = JSON.parse(JSON.stringify(this.props.buttonState))
         newLoadingButtonState[key] = !newLoadingButtonState[key]
         this.setState({ currentState: false })
@@ -25,6 +25,8 @@ class ButtonGrid extends Component<{ buttonState: ButtonState }, { currentState:
             if (!this.state.currentState) {
                 let xhr = new XMLHttpRequest();
                 xhr.open("GET", PI_IP + ":3003/serial/valve/update", true);
+                console.log("PINGING")
+                xhr.send()
             }
         }, 1000)
     }

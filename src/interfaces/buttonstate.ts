@@ -1,4 +1,5 @@
 export interface ButtonState {
+    Timestamp: number,
     FUEL_Press: Boolean,
     LOX_Press: Boolean,
     FUEL_Vent: Boolean,
