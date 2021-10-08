@@ -18,13 +18,13 @@ class Chart extends Component<{ data: number[], timestamp: number[], title: stri
                 title: this.props.title,
                 xaxis: {
                     range: this.props.xaxis.range,
-                    title: 'Time (s)'
+                    // title: 'Time (s)'
                 },
                 yaxis: this.props.yaxis,
             }}
             style={{
                 width: "100%",
-                height: 439
+                height: 300
             }}
             config={{
                 responsive: true

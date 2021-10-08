@@ -3,6 +3,9 @@ import { IDiagram } from "./interfaces/diagram"
 export const PI_IP: string = "http://192.168.137.10"
 export const RESOURCES_LOCATION: string = process.env.PUBLIC_URL + "/resources/"
 
+export const LOX_COLOR: string = "rgb(71, 188, 255)"
+export const FUEL_COLOR: string = "rgb(237, 108, 130)"
+
 export const DIAGRAM_RESOURCES: IDiagram = {
     baseImage: RESOURCES_LOCATION + "state_default.svg",
     FUEL_Press: { name: "FUEL_Press", red: RESOURCES_LOCATION + "x-red.png", green: RESOURCES_LOCATION + "x-green.png", neutral: RESOURCES_LOCATION + "x-neutral.png" },
