@@ -114,7 +114,7 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
                 setTimeout(() => {
                     flushData()
                     timeout = false
-                }, 500)
+                }, 100)
             }
         }
 

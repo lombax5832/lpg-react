@@ -7,12 +7,12 @@ export const LOX_COLOR: string = "rgb(71, 188, 255)"
 export const FUEL_COLOR: string = "rgb(237, 108, 130)"
 
 export const DIAGRAM_RESOURCES: IDiagram = {
-    baseImage: RESOURCES_LOCATION + "state_default.svg",
-    FUEL_Press: { name: "FUEL_Press", red: RESOURCES_LOCATION + "x-red.png", green: RESOURCES_LOCATION + "x-green.png", neutral: RESOURCES_LOCATION + "x-neutral.png" },
-    LOX_Press: { name: "LOX_Press", red: "", green: "", neutral: "" },
-    FUEL_Vent: { name: "FUEL_Vent", red: "", green: "", neutral: "" },
-    LOX_Vent: { name: "LOX_Vent", red: "", green: "", neutral: "" },
-    MAIN: { name: "MAIN", red: "", green: "", neutral: "" },
-    FUEL_Purge: { name: "FUEL_Purge", red: "", green: "", neutral: "" },
-    LOX_Purge: { name: "LOX_Purge", red: "", green: "", neutral: "" },
+    baseImage: RESOURCES_LOCATION + "BASE.svg",
+    FUEL_Press: { name: "FUEL_Press", red: RESOURCES_LOCATION + "FUEL-Press_red.svg", green: RESOURCES_LOCATION + "FUEL-Press_green.svg", neutral: RESOURCES_LOCATION + "FUEL-Press_neutral.svg" },
+    LOX_Press: { name: "LOX_Press", red: RESOURCES_LOCATION + "LOX-Press_red.svg", green: RESOURCES_LOCATION + "LOX-Press_green.svg", neutral: RESOURCES_LOCATION + "LOX-Press_neutral.svg" },
+    FUEL_Vent: { name: "FUEL_Vent", red: RESOURCES_LOCATION + "FUEL-Vent_red.svg", green: RESOURCES_LOCATION + "FUEL-Vent_green.svg", neutral: RESOURCES_LOCATION + "FUEL-Vent_neutral.svg" },
+    LOX_Vent: { name: "LOX_Vent", red: RESOURCES_LOCATION + "LOX-Vent_red.svg", green: RESOURCES_LOCATION + "LOX-Vent_green.svg", neutral: RESOURCES_LOCATION + "LOX-Vent_neutral.svg" },
+    MAIN: { name: "MAIN", red: RESOURCES_LOCATION + "MAIN_red.svg", green: RESOURCES_LOCATION + "MAIN_green.svg", neutral: RESOURCES_LOCATION + "MAIN_neutral.svg" },
+    FUEL_Purge: { name: "FUEL_Purge", red: RESOURCES_LOCATION + "FUEL-Purge_red.svg", green: RESOURCES_LOCATION + "FUEL-Purge_green.svg", neutral: RESOURCES_LOCATION + "FUEL-Purge_neutral.svg" },
+    LOX_Purge: { name: "LOX_Purge", red: RESOURCES_LOCATION + "LOX-Purge_red.svg", green: RESOURCES_LOCATION + "LOX-Purge_green.svg", neutral: RESOURCES_LOCATION + "LOX-Purge_neutral.svg" },
 }
