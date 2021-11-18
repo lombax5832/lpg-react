@@ -50,7 +50,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
             },
             buttonState: {
                 Timestamp: 0,
-                FUEL_Press: true,
+                FUEL_Press: false,
                 LOX_Press: false,
                 FUEL_Vent: true,
                 LOX_Vent: true,
@@ -99,16 +99,17 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                     }
                 })
             } else if (data.FUEL_Press) {
+                console.log("Received update")
                 this.setState({
                     buttonState: {
                         Timestamp: data.Timestamp,
-                        FUEL_Press: data.FUEL_Press == 48 ? false : true, //CURSED
-                        LOX_Press: data.LOX_Press == 48 ? false : true, //CURSED
-                        FUEL_Vent: data.FUEL_Vent == 48 ? false : true, //VERY CURSED
-                        LOX_Vent: data.LOX_Vent == 48 ? false : true,  //UNHOLY
-                        MAIN: data.MAIN == 48 ? false : true, //EVIL TERNARY OPERATOR HACK
-                        FUEL_Purge: data.FUEL_Purge == 48 ? false : true,  //NOT GOOD
-                        LOX_Purge: data.LOX_Purge == 48 ? false : true  //BAD
+                        FUEL_Press: data.FUEL_Press == 48 ? true : false, //CURSED
+                        LOX_Press: data.LOX_Press == 48 ? true : false, //CURSED
+                        FUEL_Vent: data.FUEL_Vent == 48 ? true : false, //VERY CURSED
+                        LOX_Vent: data.LOX_Vent == 48 ? true : false,  //UNHOLY
+                        MAIN: data.MAIN == 48 ? true : false, //EVIL TERNARY OPERATOR HACK
+                        FUEL_Purge: data.FUEL_Purge == 48 ? true : false,  //NOT GOOD
+                        LOX_Purge: data.LOX_Purge == 48 ? true : false  //BAD
                     }
                 })
                 // console.log(ev)

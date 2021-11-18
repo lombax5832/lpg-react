@@ -50,6 +50,7 @@ class ButtonGrid extends Component<{ buttonState: ButtonState }, { currentState:
 
         // Converting JSON data to string
         var data = JSON.stringify(newLoadingButtonState);
+        console.log("INSTRUCTION:")
         console.log(data);
         // Sending data with the request
         xhr.send(data);
