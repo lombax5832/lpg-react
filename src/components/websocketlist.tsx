@@ -178,7 +178,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 <Grid container item xs={9} >
                     <Box sx={{ width: '100%', typography: 'body1' }} style={{ padding: 0 }}>
                         <TabContext value={this.state.tab}>
-                            <Grid container item>
+                            <Grid container item /* Tab selector */>
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%' }}>
                                     <TabList variant='fullWidth' onChange={(event, newval) => { this.setState({ tab: newval }) }} aria-label="lab API tabs example">
                                         <Tab label="All PT" value="1" />
@@ -189,7 +189,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     </TabList>
                                 </Box>
                             </Grid>
-                            <Grid>
+                            <Grid /* Follow slider and button */>
                                 <FormGroup>
                                     <Stack spacing={3} style={{ alignItems: 'center', paddingTop: 5, paddingRight: 20 }} divider={<Divider orientation="vertical" flexItem />} direction='row'>
                                         <FormControlLabel labelPlacement="start" control={<Switch checked={this.state.range.follow} onChange={(e) => { this.setState({ range: { follow: e.target.checked, value: this.state.range.value } }) }} />} label="Follow" />
@@ -197,7 +197,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     </Stack>
                                 </FormGroup>
                             </Grid>
-                            <TabPanel value="1" style={{ padding: 10, paddingTop: 5 }}>
+                            <TabPanel value="1" style={{ padding: 10, paddingTop: 5 }} /* ALL PT Charts */>
                                 <Grid container item xs={12}>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_HE} timestamp={this.state.data.Timestamp} title={"PT_HE"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_Purge} timestamp={this.state.data.Timestamp} title={"PT_Purge"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
@@ -207,7 +207,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     <Grid item xs={6}><Chart data={this.state.data.PT_CHAM} timestamp={this.state.data.Timestamp} title={"PT_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
-                            <TabPanel value="2" style={{ padding: 10, paddingTop: 5 }}>
+                            <TabPanel value="2" style={{ padding: 10, paddingTop: 5 }} /* ALL TC Charts */>
                                 <Grid container item xs={12}>
                                     <Grid item xs={6}><Chart data={this.state.data.TC_FUEL_PV} timestamp={this.state.data.Timestamp} title={"TC_FUEL_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Temperature (C)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.TC_LOX_PV} timestamp={this.state.data.Timestamp} title={"TC_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Temperature (C)" }} /></Grid>
@@ -217,15 +217,15 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     <Grid item xs={6}><Chart data={this.state.data.TC_CHAM} timestamp={this.state.data.Timestamp} title={"TC_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Temperature (C)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
-                            <TabPanel value="3" style={{ padding: 10, paddingTop: 5 }}>
+                            <TabPanel value="3" style={{ padding: 10, paddingTop: 5 }} /* MISC INST Charts */>
                                 <Grid container item xs={12}>
                                     <Grid item xs={6}><Chart data={this.state.data.FT_Thrust} timestamp={this.state.data.Timestamp} title={"FT_Thrust"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.FL_WATER} timestamp={this.state.data.Timestamp} title={"FL_WATER"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
-                            <TabPanel value="4" style={{ padding: 10, paddingTop: 5 }}>
+                            <TabPanel value="4" style={{ padding: 10, paddingTop: 5 }} /* LOAD STATE Charts */>
                                 <Grid container item xs={12}>
-                                    <Grid item xs={6}><Multichart
+                                    <Grid item xs={6}><Multichart /* TANK TCs */
                                         data={{
                                             series1: this.state.data.TC_FUEL_PV, series2: this.state.data.TC_LOX_PV, series3: [], series4: [],
                                             name1: "TC_FUEL_PV", name2: "TC_LOX_PV", name3: "", name4: "",
@@ -236,7 +236,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                         xaxis={{ range: this.state.range.value }}
                                         yaxis={{ range: [0, 500], title: "Temperature (C)" }} />
                                     </Grid>
-                                    <Grid item xs={6}><Multichart
+                                    <Grid item xs={6}><Multichart /* TANK PTs */
                                         data={{
                                             series1: this.state.data.PT_Pneu, series2: this.state.data.PT_HE, series3: this.state.data.PT_Purge, series4: [],
                                             name1: "PT_Pneu", name2: "PT_HE", name3: "PT_Purge", name4: "",
@@ -251,7 +251,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     <Grid item xs={6}><Chart data={this.state.data.TC_LOX_PV} timestamp={this.state.data.Timestamp} title={"TC_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Temperature (C)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
-                            <TabPanel value="5" style={{ padding: 10, paddingTop: 5 }}>
+                            <TabPanel value="5" style={{ padding: 10, paddingTop: 5 }} /* OPERATION STATE Charts */>
                                 <Grid container item xs={12}>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_FUEL_PV} timestamp={this.state.data.Timestamp} title={"PT_FUEL_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_LOX_PV} timestamp={this.state.data.Timestamp} title={"PT_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
@@ -265,18 +265,18 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                     </Box>
                 </Grid>
                 <Grid item xs={3} style={{ paddingTop: 10 }}>
-                    <Grid>
+                    <Grid /* The system diagram */>
                         <Diagram buttonState={this.state.buttonState} />
                     </Grid>
-                    <Grid>
+                    <Grid /* Buttons */>
                         <ButtonGrid buttonState={this.state.buttonState} />
                     </Grid>
-                    <Grid>
+                    <Grid /* ABORT Button */>
                         <div style={{ padding: 8, borderRadius: 10, border: '2px solid rgba(0, 0, 0, 0.3)', marginTop: 30 }}>
                             <Button variant="contained" color="error" fullWidth onClick={() => { this.abortSequence() }}>ABORT</Button>
                         </div>
                     </Grid>
-                    <Grid>
+                    <Grid /* ZERO Button */>
                         <div style={{ padding: 8, borderRadius: 10, border: '2px solid rgba(0, 0, 0, 0.3)', marginTop: 30 }}>
                             <Button variant="contained" color="error" fullWidth onClick={() => { this.setOffset() }}>Zero</Button>
                         </div>
