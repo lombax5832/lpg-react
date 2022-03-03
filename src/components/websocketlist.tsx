@@ -9,12 +9,13 @@ import { ButtonState } from "../interfaces/buttonstate";
 import ButtonGrid from "./buttongrid";
 import Chart from "./chart";
 import Diagram from "./diagram";
+import DiagramGrid from "./diagramgrid";
 import Multichart from "./multichart"
 import { LOX_COLOR } from "../constants"
 import { FUEL_COLOR } from "../constants"
 import { PI_IP } from "../constants";
 
-class WebSocketList extends Component<{}, { data: IData, range: { follow: boolean, value: number[] }, timeout: { status: Boolean }, tab: string, buttonState: ButtonState, refTime: number, timeOffset: number }>{
+class WebSocketList extends Component<{}, { data: IData, range: { follow: boolean, value: number[] }, timeout: { status: Boolean }, tab: string, refTime: number, timeOffset: number }>{
 
 
     static contextType = WebSocketContext;
@@ -48,24 +49,12 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 FT_Thrust: [],
                 FL_WATER: []
             },
-            buttonState: {
-                Timestamp: 0,
-                FUEL_Press: false,
-                LOX_Press: false,
-                FUEL_Vent: true,
-                LOX_Vent: true,
-                MAIN: false,
-                FUEL_Purge: false,
-                LOX_Purge: false
-            },
             tab: '1'
         }
     }
 
     componentDidMount() {
         const worker = new Worker()
-        worker.postMessage("HEY")
-        console.log("TIMESTAMP")
         worker.addEventListener('message', (ev) => {
             // console.log("MESSAGE RECEIVED:", ev)
             console.log(this.state.refTime)
@@ -79,7 +68,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                     refTime: this.state.refTime,
                     range: newRange,
                     data: {
-                        Timestamp: [...this.state.data.Timestamp, ...data.Timestamp.map( (value) => value-this.state.timeOffset )],
+                        Timestamp: [...this.state.data.Timestamp, ...data.Timestamp.map((value) => value - this.state.timeOffset)],
                         PT_HE: [...this.state.data.PT_HE, ...data.PT_HE],
                         PT_Purge: [...this.state.data.PT_Purge, ...data.PT_Purge],
                         PT_Pneu: [...this.state.data.PT_Pneu, ...data.PT_Pneu],
@@ -98,57 +87,19 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                         FL_WATER: [...this.state.data.FL_WATER, ...data.FL_WATER]
                     }
                 })
-            } else if (data.FUEL_Press) {
-                console.log("Received update")
-                this.setState({
-                    buttonState: {
-                        Timestamp: data.Timestamp,
-                        FUEL_Press: data.FUEL_Press == 48 ? true : false, //CURSED
-                        LOX_Press: data.LOX_Press == 48 ? true : false, //CURSED
-                        FUEL_Vent: data.FUEL_Vent == 48 ? true : false, //VERY CURSED
-                        LOX_Vent: data.LOX_Vent == 48 ? true : false,  //UNHOLY
-                        MAIN: data.MAIN == 48 ? true : false, //EVIL TERNARY OPERATOR HACK
-                        FUEL_Purge: data.FUEL_Purge == 48 ? true : false,  //NOT GOOD
-                        LOX_Purge: data.LOX_Purge == 48 ? true : false  //BAD
-                    }
-                })
-                // console.log(ev)
+            } else {
+                // Received message does not contain properly formatted data
+                console.log("!!! UPDATE MALFORMED !!!")
             }
         })
-        // console.log("SENT MESSAGE")
     }
 
     componentDidUpdate() {
     }
 
-    abortSequence() {
-        let xhr = new XMLHttpRequest();
-        // xhr.open("POST", "http://65.78.156.235" + ":3003/serial/valve/update", true);
-        xhr.open("POST", PI_IP + ":3003/serial/valve/update", true);
-        // console.log(PI_IP+":3003/serial/valve/update")
-
-        // Set the request header i.e. which type of content you are sending
-        xhr.setRequestHeader("Content-Type", "application/json");
-
-        // Converting JSON data to string
-        var data = JSON.stringify({
-            Timestamp: 0,
-            FUEL_Press: false,
-            LOX_Press: false,
-            FUEL_Vent: false,
-            LOX_Vent: false,
-            MAIN: false,
-            FUEL_Purge: false,
-            LOX_Purge: false
-        });
-        console.log(data);
-        // Sending data with the request
-        xhr.send(data);
-    }
-
-    setOffset(){
+    setOffset() {
         this.setState({
-            timeOffset: this.state.data.Timestamp[this.state.data.Timestamp.length-1] + this.state.timeOffset,
+            timeOffset: this.state.data.Timestamp[this.state.data.Timestamp.length - 1] + this.state.timeOffset,
             data: {
                 Timestamp: [],
                 PT_HE: [],
@@ -174,11 +125,11 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
     render() {
 
         return (<>
-            <Grid container >
+            <Grid container>
                 <Grid container item xs={9} >
                     <Box sx={{ width: '100%', typography: 'body1' }} style={{ padding: 0 }}>
                         <TabContext value={this.state.tab}>
-                            <Grid container item>
+                            <Grid container item /* This is the tab selector */>
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%' }}>
                                     <TabList variant='fullWidth' onChange={(event, newval) => { this.setState({ tab: newval }) }} aria-label="lab API tabs example">
                                         <Tab label="All PT" value="1" />
@@ -189,7 +140,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     </TabList>
                                 </Box>
                             </Grid>
-                            <Grid>
+                            <Grid /* This is the follow slider */>
                                 <FormGroup>
                                     <Stack spacing={3} style={{ alignItems: 'center', paddingTop: 5, paddingRight: 20 }} divider={<Divider orientation="vertical" flexItem />} direction='row'>
                                         <FormControlLabel labelPlacement="start" control={<Switch checked={this.state.range.follow} onChange={(e) => { this.setState({ range: { follow: e.target.checked, value: this.state.range.value } }) }} />} label="Follow" />
@@ -197,7 +148,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     </Stack>
                                 </FormGroup>
                             </Grid>
-                            <TabPanel value="1" style={{ padding: 10, paddingTop: 5 }}>
+                            <TabPanel value="1" style={{ padding: 10, paddingTop: 5 }} /* Charts for ALL PT Tab */>
                                 <Grid container item xs={12}>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_HE} timestamp={this.state.data.Timestamp} title={"PT_HE"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_Purge} timestamp={this.state.data.Timestamp} title={"PT_Purge"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
@@ -207,7 +158,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     <Grid item xs={6}><Chart data={this.state.data.PT_CHAM} timestamp={this.state.data.Timestamp} title={"PT_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
-                            <TabPanel value="2" style={{ padding: 10, paddingTop: 5 }}>
+                            <TabPanel value="2" style={{ padding: 10, paddingTop: 5 }} /* Charts for ALL TC Tab */>
                                 <Grid container item xs={12}>
                                     <Grid item xs={6}><Chart data={this.state.data.TC_FUEL_PV} timestamp={this.state.data.Timestamp} title={"TC_FUEL_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Temperature (C)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.TC_LOX_PV} timestamp={this.state.data.Timestamp} title={"TC_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Temperature (C)" }} /></Grid>
@@ -217,15 +168,15 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     <Grid item xs={6}><Chart data={this.state.data.TC_CHAM} timestamp={this.state.data.Timestamp} title={"TC_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Temperature (C)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
-                            <TabPanel value="3" style={{ padding: 10, paddingTop: 5 }}>
+                            <TabPanel value="3" style={{ padding: 10, paddingTop: 5 }} /* Charts for Misc Inst. Tab */>
                                 <Grid container item xs={12}>
                                     <Grid item xs={6}><Chart data={this.state.data.FT_Thrust} timestamp={this.state.data.Timestamp} title={"FT_Thrust"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.FL_WATER} timestamp={this.state.data.Timestamp} title={"FL_WATER"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
-                            <TabPanel value="4" style={{ padding: 10, paddingTop: 5 }}>
+                            <TabPanel value="4" style={{ padding: 10, paddingTop: 5 }} /* Charts for LOAD STATE Tab */>
                                 <Grid container item xs={12}>
-                                    <Grid item xs={6}><Multichart
+                                    <Grid item xs={6}><Multichart /* TANK TCs, one chart */
                                         data={{
                                             series1: this.state.data.TC_FUEL_PV, series2: this.state.data.TC_LOX_PV, series3: [], series4: [],
                                             name1: "TC_FUEL_PV", name2: "TC_LOX_PV", name3: "", name4: "",
@@ -236,7 +187,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                         xaxis={{ range: this.state.range.value }}
                                         yaxis={{ range: [0, 500], title: "Temperature (C)" }} />
                                     </Grid>
-                                    <Grid item xs={6}><Multichart
+                                    <Grid item xs={6}><Multichart /* TANK PT, one chart */
                                         data={{
                                             series1: this.state.data.PT_Pneu, series2: this.state.data.PT_HE, series3: this.state.data.PT_Purge, series4: [],
                                             name1: "PT_Pneu", name2: "PT_HE", name3: "PT_Purge", name4: "",
@@ -251,7 +202,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     <Grid item xs={6}><Chart data={this.state.data.TC_LOX_PV} timestamp={this.state.data.Timestamp} title={"TC_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Temperature (C)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
-                            <TabPanel value="5" style={{ padding: 10, paddingTop: 5 }}>
+                            <TabPanel value="5" style={{ padding: 10, paddingTop: 5 }} /* Charts for  OPERATION STATE tab */ >
                                 <Grid container item xs={12}>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_FUEL_PV} timestamp={this.state.data.Timestamp} title={"PT_FUEL_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_LOX_PV} timestamp={this.state.data.Timestamp} title={"PT_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
@@ -265,21 +216,8 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                     </Box>
                 </Grid>
                 <Grid item xs={3} style={{ paddingTop: 10 }}>
-                    <Grid>
-                        <Diagram buttonState={this.state.buttonState} />
-                    </Grid>
-                    <Grid>
-                        <ButtonGrid buttonState={this.state.buttonState} />
-                    </Grid>
-                    <Grid>
-                        <div style={{ padding: 8, borderRadius: 10, border: '2px solid rgba(0, 0, 0, 0.3)', marginTop: 30 }}>
-                            <Button variant="contained" color="error" fullWidth onClick={() => { this.abortSequence() }}>ABORT</Button>
-                        </div>
-                    </Grid>
-                    <Grid>
-                        <div style={{ padding: 8, borderRadius: 10, border: '2px solid rgba(0, 0, 0, 0.3)', marginTop: 30 }}>
-                            <Button variant="contained" color="error" fullWidth onClick={() => { this.setOffset() }}>Zero</Button>
-                        </div>
+                    <Grid /* The system diagram */>
+                        <DiagramGrid data={this.state.data} />
                     </Grid>
                 </Grid>
             </Grid>
