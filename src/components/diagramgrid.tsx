@@ -94,17 +94,17 @@ class DiagramGrid extends Component<{ data: IDataLast }, {}> {
                         </Box>
                     </Item>
                     <Item /*FT Thrust*/>
-                        <Box style={{ position: 'absolute', top: '545px', left: '85px' }}>
+                        <Box style={{ position: 'absolute', top: '546px', left: '85px' }}>
                             <DisplayLastData ID='F:Thrust' data={this.props.data.FT_Thrust} unit='lbf' color='Peru'/>
                         </Box>
                     </Item>
                     <Item /*PT CHAM*/>
-                        <Box style={{ position: 'absolute', top: '545px', left: '292px' }}>
+                        <Box style={{ position: 'absolute', top: '546px', left: '292px' }}>
                             <DisplayLastData ID='P:CHAM' data={this.props.data.PT_CHAM} unit='psi' color='LightGreen'/>
                         </Box>
                     </Item>
                     <Item /*TC CHAM*/>
-                        <Box style={{ position: 'absolute', top: '545px', left: '390px' }}>
+                        <Box style={{ position: 'absolute', top: '546px', left: '389px' }}>
                             <DisplayLastData ID='T:CHAM' data={this.props.data.TC_CHAM} unit='°C' color='LightSkyBlue'/>
                         </Box>
                     </Item>
