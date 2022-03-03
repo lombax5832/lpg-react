@@ -95,7 +95,7 @@ class DiagramGrid extends Component<{ data: IData }, {}> {
                     </Item>
                     <Item /*FT Thrust*/>
                         <Box style={{ position: 'absolute', top: '545px', left: '85px' }}>
-                            <DisplayLastData ID='F:Thrust' data={this.props.data.PT_CHAM} unit='lbf' />
+                            <DisplayLastData ID='F:Thrust' data={this.props.data.FT_Thrust} unit='lbf' />
                         </Box>
                     </Item>
                     <Item /*PT CHAM*/>
@@ -105,7 +105,7 @@ class DiagramGrid extends Component<{ data: IData }, {}> {
                     </Item>
                     <Item /*TC CHAM*/>
                         <Box style={{ position: 'absolute', top: '545px', left: '390px' }}>
-                            <DisplayLastData ID='T:CHAM' data={this.props.data.PT_CHAM} unit='°C' />
+                            <DisplayLastData ID='T:CHAM' data={this.props.data.TC_CHAM} unit='°C' />
                         </Box>
                     </Item>
                 </Box>
