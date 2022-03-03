@@ -26,4 +26,17 @@ export interface IDiagramState {
     LOX_Purge: DiagramState
 }
 
+export interface IDiagramDataStyle {
+    display: string
+    border: string
+    borderRadius: number
+    fontSize: string
+    m: number
+    padding: string
+    fontWeight: string
+    bgcolor: string
+    color: string
+    width: string
+}
+
 type DiagramState = "red" | "green" | "neutral"
