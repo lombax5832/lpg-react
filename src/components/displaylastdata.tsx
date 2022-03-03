@@ -24,7 +24,7 @@ class DisplayLastData extends Component<{ ID: string, data: number[], unit: stri
             <Box sx={styles.flexBox}>
                 <div style={{textAlign: 'center'}}>
                     {this.props.ID}
-                    <NewLine></NewLine>
+                    <NewLine/>
                     {this.props.data.length>1 ? this.props.data[this.props.data.length - 1] : "—"}
                     {this.props.unit}
                 </div>
