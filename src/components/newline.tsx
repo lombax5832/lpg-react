@@ -6,6 +6,7 @@ const styles = {
     }
 }
 
+// Literally just inserts a fullwidth div to force a newline
 class NewLine extends Component {
     render() {
         return(
