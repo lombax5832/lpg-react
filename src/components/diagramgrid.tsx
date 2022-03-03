@@ -2,7 +2,7 @@ import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
 import { Component } from "react";
 import { DIAGRAM_RESOURCES } from "../constants";
-import { IData } from "../interfaces/data";
+import { IDataLast } from "../interfaces/data";
 import DisplayLastData from './displaylastdata';
 
 const styles = {
@@ -37,7 +37,7 @@ Item.propTypes = {
 
 // Creates a grid with a background image of the system and displays the most recent datapoint for each sensor overtop it
 // Featuring cringe hardcoded pixel locations
-class DiagramGrid extends Component<{ data: IData }, {}> {
+class DiagramGrid extends Component<{ data: IDataLast }, {}> {
 
     render() {
         return (
@@ -99,7 +99,7 @@ class DiagramGrid extends Component<{ data: IData }, {}> {
                         </Box>
                     </Item>
                     <Item /*PT CHAM*/>
-                        <Box style={{ position: 'absolute', top: '545px', left: '293px' }}>
+                        <Box style={{ position: 'absolute', top: '545px', left: '292px' }}>
                             <DisplayLastData ID='P:CHAM' data={this.props.data.PT_CHAM} unit='psi' color='LightGreen'/>
                         </Box>
                     </Item>

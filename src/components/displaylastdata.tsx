@@ -19,7 +19,7 @@ const styles = {
     },
 }
 
-class DisplayLastData extends Component<{ ID: string, data: number[], unit: string, color: string }, { style: IDiagramDataStyle}> {
+class DisplayLastData extends Component<{ ID: string, data: number, unit: string, color: string }, { style: IDiagramDataStyle}> {
 
     constructor(props) {
         super(props)
@@ -49,7 +49,7 @@ class DisplayLastData extends Component<{ ID: string, data: number[], unit: stri
                 <div style={{ textAlign: 'center' }}>
                     {this.props.ID}
                     <NewLine />
-                    {this.props.data.length > 1 ? this.props.data[this.props.data.length - 1] : "—"}
+                    {this.props.data ? this.props.data : "—"}
                     {this.props.unit}
                 </div>
             </Box>

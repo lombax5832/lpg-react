@@ -217,7 +217,21 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 </Grid>
                 <Grid item xs={3} style={{ paddingTop: 10 }}>
                     <Grid /* The system diagram */>
-                        <DiagramGrid data={this.state.data} />
+                        <DiagramGrid data={{ // Only pass the last elements to save time
+                            PT_HE : this.state.data.PT_HE[this.state.data.PT_HE.length - 1],
+                            PT_Purge : this.state.data.PT_Purge[this.state.data.PT_Purge.length - 1],
+                            PT_Pneu : this.state.data.PT_Pneu[this.state.data.PT_Pneu.length - 1],
+                            PT_FUEL_PV : this.state.data.PT_FUEL_PV[this.state.data.PT_FUEL_PV.length - 1],
+                            PT_LOX_PV : this.state.data.PT_LOX_PV[this.state.data.PT_LOX_PV.length - 1],
+                            PT_CHAM : this.state.data.PT_CHAM[this.state.data.PT_CHAM.length - 1],
+                            TC_FUEL_PV : this.state.data.TC_FUEL_PV[this.state.data.TC_FUEL_PV.length - 1],
+                            TC_LOX_PV : this.state.data.TC_LOX_PV[this.state.data.TC_LOX_PV.length - 1],
+                            TC_LOX_Valve_Main : this.state.data.TC_LOX_Valve_Main[this.state.data.TC_LOX_Valve_Main.length - 1],
+                            TC_WATER_In : this.state.data.TC_WATER_In[this.state.data.TC_WATER_In.length - 1],
+                            TC_WATER_Out : this.state.data.TC_WATER_Out[this.state.data.TC_WATER_Out.length - 1],
+                            TC_CHAM : this.state.data.TC_CHAM[this.state.data.TC_CHAM.length - 1],
+                            FT_Thrust : this.state.data.FT_Thrust[this.state.data.FT_Thrust.length - 1]
+                        }}/>
                     </Grid>
                 </Grid>
             </Grid>
