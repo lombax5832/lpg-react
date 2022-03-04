@@ -15,7 +15,6 @@ export interface IData {
     TC_CHAM: number[]
     //RC_LOX_Level: number[]
     FT_Thrust: number[]
-    FL_WATER: number[]
 }
 
 export interface IDataLast {

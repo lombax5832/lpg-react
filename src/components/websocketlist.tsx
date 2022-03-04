@@ -46,8 +46,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 TC_WATER_Out: [],
                 TC_CHAM: [],
                 //RC_LOX_Level: [],
-                FT_Thrust: [],
-                FL_WATER: []
+                FT_Thrust: []
             },
             tab: '1'
         }
@@ -84,8 +83,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                         TC_WATER_Out: [...this.state.data.TC_WATER_Out, ...data.TC_WATER_Out],
                         TC_CHAM: [...this.state.data.TC_CHAM, ...data.TC_CHAM],
                         //RC_LOX_Level: [...this.state.data.RC_LOX_Level, ...data.RC_LOX_Level],
-                        FT_Thrust: [...this.state.data.FT_Thrust, ...data.FT_Thrust],
-                        FL_WATER: [...this.state.data.FL_WATER, ...data.FL_WATER]
+                        FT_Thrust: [...this.state.data.FT_Thrust, ...data.FT_Thrust]
                     }
                 })
             } else {
@@ -117,8 +115,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 TC_WATER_Out: [],
                 TC_CHAM: [],
                 //RC_LOX_Level: [],
-                FT_Thrust: [],
-                FL_WATER: []
+                FT_Thrust: []
             }
         })
     }
@@ -172,7 +169,6 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                             <TabPanel value="3" style={{ padding: 10, paddingTop: 5 }} /* Charts for Misc Inst. Tab */>
                                 <Grid container item xs={12}>
                                     <Grid item xs={6}><Chart data={this.state.data.FT_Thrust} timestamp={this.state.data.Timestamp} title={"FT_Thrust"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.FL_WATER} timestamp={this.state.data.Timestamp} title={"FL_WATER"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
                             <TabPanel value="4" style={{ padding: 10, paddingTop: 5 }} /* Charts for LOAD STATE Tab */>
@@ -209,7 +205,6 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     <Grid item xs={6}><Chart data={this.state.data.PT_LOX_PV} timestamp={this.state.data.Timestamp} title={"PT_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_CHAM} timestamp={this.state.data.Timestamp} title={"PT_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.TC_CHAM} timestamp={this.state.data.Timestamp} title={"TC_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Temperature (C)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.FL_WATER} timestamp={this.state.data.Timestamp} title={"FL_Water"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Flow Rate (L/s)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.FT_Thrust} timestamp={this.state.data.Timestamp} title={"FT_Thrust"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Force (Lbf)" }} /></Grid>
                                 </Grid>
                             </TabPanel>

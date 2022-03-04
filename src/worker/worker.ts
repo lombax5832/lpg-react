@@ -31,8 +31,7 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
         TC_WATER_Out: [],
         TC_CHAM: [],
         //RC_LOX_Level: [],
-        FT_Thrust: [],
-        FL_WATER: []
+        FT_Thrust: []
     }
 
     const socket = new WebSocket(url);
@@ -70,8 +69,7 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
                 TC_WATER_Out: [],
                 TC_CHAM: [],
                 //RC_LOX_Level: [],
-                FT_Thrust: [],
-                FL_WATER: []
+                FT_Thrust: []
             }
         }
 
@@ -99,8 +97,7 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
                     TC_WATER_Out: [...data.TC_WATER_Out, val.TC_WATER_Out],
                     TC_CHAM: [...data.TC_CHAM, val.TC_CHAM],
                     //RC_LOX_Level: [...data.RC_LOX_Level, val.RC_LOX_Level],
-                    FT_Thrust: [...data.FT_Thrust, val.FT_Thrust],
-                    FL_WATER: [...data.FL_WATER, val.FL_WATER]
+                    FT_Thrust: [...data.FT_Thrust, val.FT_Thrust]
                 }
 
 
