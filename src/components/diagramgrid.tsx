@@ -75,7 +75,7 @@ class DiagramGrid extends Component<{ data: IDataLast }, {}> {
                     </Item>
                     <Item /*TC LOX PV*/>
                         <Box style={{ position: 'absolute', top: '340px', left: '141px' }}>
-                            <DisplayLastData ID='T:LOX' data={this.props.data.PT_LOX_PV} unit='°C' color='LightSkyBlue'/>
+                            <DisplayLastData ID='T:LOX' data={this.props.data.TC_LOX_PV} unit='°C' color='LightSkyBlue'/>
                         </Box>
                     </Item>
                     <Item /*TC LOX VALVE*/>
