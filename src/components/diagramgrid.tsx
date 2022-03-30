@@ -11,7 +11,7 @@ const styles = {
         backgroundPosition: 'top center',
         backgroundSize: 'contain',
         backgroundRepeat: 'no-repeat',
-        height: '100vh',
+        height: '650px',
         wight: '100vw'
     }
 };

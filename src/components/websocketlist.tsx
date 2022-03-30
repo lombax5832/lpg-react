@@ -1,4 +1,4 @@
-import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { TabContext, TabList, TabPanel, LoadingButton } from "@mui/lab";
 import { Box, ButtonGroup, Divider, FormControlLabel, FormGroup, Grid, Slider, Stack, Switch, Tab, Button } from "@mui/material";
 import { Component } from "react";
 // eslint-disable-next-line import/no-webpack-loader-syntax
@@ -14,14 +14,28 @@ import Multichart from "./multichart"
 import { LOX_COLOR } from "../constants"
 import { FUEL_COLOR } from "../constants"
 import { PI_IP } from "../constants";
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import AlertDialog from "./alertdialog";
 
-class WebSocketList extends Component<{}, { data: IData, range: { follow: boolean, value: number[] }, timeout: { status: Boolean }, tab: string, refTime: number, timeOffset: number }>{
+const processActive = createTheme({
+    palette: {
+        action: {
+            disabledBackground: 'green',
+            disabled: 'black'
+        }
+    }
+})
+
+
+class WebSocketList extends Component<{}, { data: IData, range: { follow: boolean, value: number[] }, timeout: { status: Boolean }, tab: string, refTime: number, timeOffset: number, dataButtonEnable: boolean, dataButtonUnlock: boolean, dataButtonOpenDialog: boolean, storageButtonEnable: boolean, storageButtonUnlock: boolean, storageButtonOpenDialog: boolean }>{
 
 
     static contextType = WebSocketContext;
 
     constructor(props) {
         super(props);
+
+        this.updateButtonEnable = this.updateButtonEnable.bind(this);
 
         this.state = {
             timeOffset: 0,
@@ -48,7 +62,14 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 //RC_LOX_Level: [],
                 FT_Thrust: []
             },
-            tab: '1'
+            tab: '1',
+            dataButtonEnable: true,
+            dataButtonUnlock: false,
+            dataButtonOpenDialog: false,
+            storageButtonEnable: true,
+            storageButtonUnlock: false,
+            storageButtonOpenDialog: false
+
         }
     }
 
@@ -120,7 +141,61 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
         })
     }
 
-    render() {
+    startDataCollection() {
+        // Disable the button
+        // Enable the abort button
+        this.setState({ dataButtonEnable: false });
+        // Command Pi to collect Data
+        // http request goes here
+    }
+
+    startDataStorage() {
+        // Disable the button
+        // Enable the abort button
+        this.setState({ storageButtonEnable: false })
+        // Command Pi to store data
+        // http request goes here
+    }
+
+    stopDataCollection() {
+        // Enable the prompt
+        this.setState({ dataButtonOpenDialog: true });
+    }
+
+    stopDataStorage() {
+        // Enable the prompt
+        this.setState({ storageButtonOpenDialog: true })
+    }
+
+    updateButtonEnable = (newState, dialogName) => {
+        // Lets Alertdialog modify the button state
+        switch (dialogName) {
+            case 'data collection':
+                this.setState({ dataButtonEnable: newState });
+                break;
+            case 'data storage':
+                this.setState({ storageButtonEnable: newState });
+                break;
+            default:
+                console.log('ERR: dialog not match cases in updateButtonEnable')
+        }
+    }
+
+    closeDialog = (dialogName) => {
+        // Closes a dialog box
+        switch (dialogName) {
+            case 'data collection':
+                this.setState({ dataButtonOpenDialog: false });
+                break;
+            case 'data storage':
+                this.setState({ storageButtonOpenDialog: false });
+                break;
+            default:
+                console.log('ERR: dialog not match cases in closeDialog')
+        }
+    }
+
+    render(): JSX.Element {
 
         return (<>
             <Grid container>
@@ -214,20 +289,52 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 <Grid item xs={3} style={{ paddingTop: 10 }}>
                     <Grid /* The system diagram */>
                         <DiagramGrid data={{ // Only pass the last elements to save time
-                            PT_HE : this.state.data.PT_HE[this.state.data.PT_HE.length - 1],
-                            PT_Purge : this.state.data.PT_Purge[this.state.data.PT_Purge.length - 1],
-                            PT_Pneu : this.state.data.PT_Pneu[this.state.data.PT_Pneu.length - 1],
-                            PT_FUEL_PV : this.state.data.PT_FUEL_PV[this.state.data.PT_FUEL_PV.length - 1],
-                            PT_LOX_PV : this.state.data.PT_LOX_PV[this.state.data.PT_LOX_PV.length - 1],
-                            PT_CHAM : this.state.data.PT_CHAM[this.state.data.PT_CHAM.length - 1],
-                            TC_FUEL_PV : this.state.data.TC_FUEL_PV[this.state.data.TC_FUEL_PV.length - 1],
-                            TC_LOX_PV : this.state.data.TC_LOX_PV[this.state.data.TC_LOX_PV.length - 1],
-                            TC_LOX_Valve_Main : this.state.data.TC_LOX_Valve_Main[this.state.data.TC_LOX_Valve_Main.length - 1],
-                            TC_WATER_In : this.state.data.TC_WATER_In[this.state.data.TC_WATER_In.length - 1],
-                            TC_WATER_Out : this.state.data.TC_WATER_Out[this.state.data.TC_WATER_Out.length - 1],
-                            TC_CHAM : this.state.data.TC_CHAM[this.state.data.TC_CHAM.length - 1],
-                            FT_Thrust : this.state.data.FT_Thrust[this.state.data.FT_Thrust.length - 1]
-                        }}/>
+                            PT_HE: this.state.data.PT_HE[this.state.data.PT_HE.length - 1],
+                            PT_Purge: this.state.data.PT_Purge[this.state.data.PT_Purge.length - 1],
+                            PT_Pneu: this.state.data.PT_Pneu[this.state.data.PT_Pneu.length - 1],
+                            PT_FUEL_PV: this.state.data.PT_FUEL_PV[this.state.data.PT_FUEL_PV.length - 1],
+                            PT_LOX_PV: this.state.data.PT_LOX_PV[this.state.data.PT_LOX_PV.length - 1],
+                            PT_CHAM: this.state.data.PT_CHAM[this.state.data.PT_CHAM.length - 1],
+                            TC_FUEL_PV: this.state.data.TC_FUEL_PV[this.state.data.TC_FUEL_PV.length - 1],
+                            TC_LOX_PV: this.state.data.TC_LOX_PV[this.state.data.TC_LOX_PV.length - 1],
+                            TC_LOX_Valve_Main: this.state.data.TC_LOX_Valve_Main[this.state.data.TC_LOX_Valve_Main.length - 1],
+                            TC_WATER_In: this.state.data.TC_WATER_In[this.state.data.TC_WATER_In.length - 1],
+                            TC_WATER_Out: this.state.data.TC_WATER_Out[this.state.data.TC_WATER_Out.length - 1],
+                            TC_CHAM: this.state.data.TC_CHAM[this.state.data.TC_CHAM.length - 1],
+                            FT_Thrust: this.state.data.FT_Thrust[this.state.data.FT_Thrust.length - 1]
+                        }} />
+                    </Grid>
+                    <Grid container spacing={1}>
+                        <Grid item xs={8}/* ABORT Button */>
+                            <div style={{ padding: 8, borderRadius: 10, border: '2px solid rgba(0, 0, 0, 0.3)', marginTop: 10 }}>
+                                <ThemeProvider theme={processActive} >
+                                    <LoadingButton loadingPosition="start" color='error' loading={!this.state.dataButtonEnable} disabled={!this.state.dataButtonEnable} fullWidth variant="contained" onClick={() => { this.startDataCollection() }} sx={{ fontWeight: 'bold' }}>
+                                        {`DATA STORAGE: ${this.state.dataButtonEnable ? 'DISABLED' : 'ENABLED'}`}
+                                    </LoadingButton>
+                                </ThemeProvider>
+                            </div>
+                            <div style={{ padding: 8, borderRadius: 10, border: '2px solid rgba(0, 0, 0, 0.3)', marginTop: 20 }}>
+                                <ThemeProvider theme={processActive} >
+                                    <LoadingButton loadingPosition="start" color='error' loading={!this.state.storageButtonEnable} disabled={!this.state.storageButtonEnable} fullWidth variant="contained" onClick={() => { this.startDataStorage() }} sx={{ fontWeight: 'bold' }}>
+                                        {`DATA STORAGE: ${this.state.storageButtonEnable ? 'DISABLED' : 'ENABLED'}`}
+                                    </LoadingButton>
+                                </ThemeProvider>
+                            </div>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <div style={{ padding: 8, borderRadius: 10, border: '2px solid rgba(0, 0, 0, 0.3)', marginTop: 10 }}>
+                                <LoadingButton loadingPosition="start" color='error' disabled={this.state.dataButtonEnable} fullWidth variant="contained" onClick={() => { this.stopDataCollection() }} sx={{ fontWeight: 'bold' }}>
+                                    STOP?
+                                </LoadingButton>
+                                <AlertDialog action={this.updateButtonEnable} triggerOpenDialog={this.state.dataButtonOpenDialog} dialogName={"data collection"} closeDialogFCN={this.closeDialog} />
+                            </div>
+                            <div style={{ padding: 8, borderRadius: 10, border: '2px solid rgba(0, 0, 0, 0.3)', marginTop: 20 }}>
+                                <LoadingButton loadingPosition="start" color='error' disabled={this.state.storageButtonEnable} fullWidth variant="contained" onClick={() => { this.stopDataStorage() }} sx={{ fontWeight: 'bold' }}>
+                                    STOP?
+                                </LoadingButton>
+                                <AlertDialog action={this.updateButtonEnable} triggerOpenDialog={this.state.storageButtonOpenDialog} dialogName={"data storage"} closeDialogFCN={this.closeDialog} />
+                            </div>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
