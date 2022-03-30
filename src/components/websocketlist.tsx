@@ -309,7 +309,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                             <div style={{ padding: 8, borderRadius: 10, border: '2px solid rgba(0, 0, 0, 0.3)', marginTop: 10 }}>
                                 <ThemeProvider theme={processActive} >
                                     <LoadingButton loadingPosition="start" color='error' loading={!this.state.dataButtonEnable} disabled={!this.state.dataButtonEnable} fullWidth variant="contained" onClick={() => { this.startDataCollection() }} sx={{ fontWeight: 'bold' }}>
-                                        {`DATA STORAGE: ${this.state.dataButtonEnable ? 'DISABLED' : 'ENABLED'}`}
+                                        {`DATA COLLECTION: ${this.state.dataButtonEnable ? 'DISABLED' : 'ENABLED'}`}
                                     </LoadingButton>
                                 </ThemeProvider>
                             </div>
