@@ -147,6 +147,10 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
         this.setState({ dataButtonEnable: false });
         // Command Pi to collect Data
         // http request goes here
+        let xhr = new XMLHttpRequest();
+        // xhr.open("GET", "http://65.78.156.235" + ":3003/serial/valve/update", true);
+        xhr.open("GET", PI_IP + ":3002/serial/caching/CLOSE", true);
+        xhr.send();
     }
 
     startDataStorage() {
