@@ -6,6 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Component } from 'react';
+import { PI_IP, DATA_COLLECT_URL, DATA_STORAGE_URL } from "../constants";
 
 
 class AlertDialog extends Component <{action: any, triggerOpenDialog: boolean, closeDialogFCN: any, dialogName: string},{dialogOpen: boolean}> {
@@ -36,6 +37,17 @@ class AlertDialog extends Component <{action: any, triggerOpenDialog: boolean, c
         this.props.closeDialogFCN(this.props.dialogName)
         // Stop the corresponding service
         // http request goes here
+        let xhr = new XMLHttpRequest();
+        // xhr.open("GET", "http://65.78.156.235" + ":3003/serial/valve/update", true);
+        switch (this.props.dialogName) {
+            case 'data collection':
+                xhr.open("GET", PI_IP + DATA_COLLECT_URL + "CLOSE", true);
+                break;
+            case 'data storage':
+                xhr.open("GET", PI_IP + DATA_STORAGE_URL + "CLOSE", true);
+                break;
+        }
+        xhr.send();
     };
 
     render() {

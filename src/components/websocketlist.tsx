@@ -13,7 +13,7 @@ import DiagramGrid from "./diagramgrid";
 import Multichart from "./multichart"
 import { LOX_COLOR } from "../constants"
 import { FUEL_COLOR } from "../constants"
-import { PI_IP } from "../constants";
+import { PI_IP, DATA_COLLECT_URL, DATA_STORAGE_URL } from "../constants";
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import AlertDialog from "./alertdialog";
 
@@ -149,7 +149,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
         // http request goes here
         let xhr = new XMLHttpRequest();
         // xhr.open("GET", "http://65.78.156.235" + ":3003/serial/valve/update", true);
-        xhr.open("GET", PI_IP + ":3002/serial/caching/CLOSE", true);
+        xhr.open("GET", PI_IP + DATA_COLLECT_URL + "START", true);
         xhr.send();
     }
 
@@ -159,11 +159,16 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
         this.setState({ storageButtonEnable: false })
         // Command Pi to store data
         // http request goes here
+        let xhr = new XMLHttpRequest();
+        // xhr.open("GET", "http://65.78.156.235" + ":3003/serial/valve/update", true);
+        xhr.open("GET", PI_IP + DATA_STORAGE_URL + "START", true);
+        xhr.send();
     }
 
     stopDataCollection() {
         // Enable the prompt
         this.setState({ dataButtonOpenDialog: true });
+        // Stopping the data collection is handled in alertdialog.tsx
     }
 
     stopDataStorage() {

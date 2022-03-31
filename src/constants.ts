@@ -16,3 +16,6 @@ export const DIAGRAM_RESOURCES: IDiagram = {
     FUEL_Purge: { name: "FUEL_Purge", red: RESOURCES_LOCATION + "FUEL-Purge_red.svg", green: RESOURCES_LOCATION + "FUEL-Purge_green.svg", neutral: RESOURCES_LOCATION + "FUEL-Purge_neutral.svg" },
     LOX_Purge: { name: "LOX_Purge", red: RESOURCES_LOCATION + "LOX-Purge_red.svg", green: RESOURCES_LOCATION + "LOX-Purge_green.svg", neutral: RESOURCES_LOCATION + "LOX-Purge_neutral.svg" },
 }
+
+export const DATA_COLLECT_URL: string = ":3002/serial/caching/"
+export const DATA_STORAGE_URL: string = ":3004/serial/storage/"
