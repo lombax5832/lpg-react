@@ -161,7 +161,8 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
         // http request goes here
         let xhr = new XMLHttpRequest();
         // xhr.open("GET", "http://65.78.156.235" + ":3003/serial/valve/update", true);
-        xhr.open("GET", PI_IP + DATA_STORAGE_URL + "START", true);
+        console.log(window.location.hostname+DATA_STORAGE_URL+"START")
+        xhr.open("GET", "http://localhost" + DATA_STORAGE_URL + "START", true);
         xhr.send();
     }
 

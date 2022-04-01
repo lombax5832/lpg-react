@@ -44,7 +44,7 @@ class AlertDialog extends Component <{action: any, triggerOpenDialog: boolean, c
                 xhr.open("GET", PI_IP + DATA_COLLECT_URL + "CLOSE", true);
                 break;
             case 'data storage':
-                xhr.open("GET", PI_IP + DATA_STORAGE_URL + "CLOSE", true);
+                xhr.open("GET", "http://localhost" + DATA_STORAGE_URL + "CLOSE", true);
                 break;
         }
         xhr.send();
