@@ -53,11 +53,6 @@ class DiagramGrid extends Component<{ data: IDataLast }, {}> {
                             <DisplayLastData ID='P:Pneu' data={this.props.data.PT_Pneu} unit='psi' color='LightGreen' />
                         </Box>
                     </Item>
-                    <Item /*PT Purge*/>
-                        <Box style={{ position: 'absolute', top: '35px', left: '360px' }}>
-                            <DisplayLastData ID='P:F_INJ' data={this.props.data.PT_FUEL_INJ} unit='psi' color='LightGreen'/>
-                        </Box>
-                    </Item>
                     <Item /*PT FUEL PV*/>
                         <Box style={{ position: 'absolute', top: '270px', left: '5px' }}>
                             <DisplayLastData ID='P:FUEL' data={this.props.data.PT_FUEL_PV} unit='psi' color='LightGreen'/>
@@ -98,13 +93,18 @@ class DiagramGrid extends Component<{ data: IDataLast }, {}> {
                             <DisplayLastData ID='F:Thrust' data={this.props.data.FT_Thrust} unit='lbf' color='Peru'/>
                         </Box>
                     </Item>
+                    <Item /*PT FUEL_INJ*/>
+                        <Box style={{ position: 'absolute', top: '546px', left: '293px' }}>
+                            <DisplayLastData ID='P:F_INJ' data={this.props.data.PT_FUEL_INJ} unit='psi' color='LightGreen'/>
+                        </Box>
+                    </Item>
                     <Item /*PT CHAM*/>
-                        <Box style={{ position: 'absolute', top: '546px', left: '292px' }}>
+                        <Box style={{ position: 'absolute', top: '520px', left: '385px' }}>
                             <DisplayLastData ID='P:CHAM' data={this.props.data.PT_CHAM} unit='psi' color='LightGreen'/>
                         </Box>
                     </Item>
                     <Item /*TC CHAM*/>
-                        <Box style={{ position: 'absolute', top: '546px', left: '389px' }}>
+                        <Box style={{ position: 'absolute', top: '572px', left: '385px' }}>
                             <DisplayLastData ID='T:CHAM' data={this.props.data.TC_CHAM} unit='°C' color='LightSkyBlue'/>
                         </Box>
                     </Item>
