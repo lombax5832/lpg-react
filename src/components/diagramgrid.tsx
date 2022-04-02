@@ -55,7 +55,7 @@ class DiagramGrid extends Component<{ data: IDataLast }, {}> {
                     </Item>
                     <Item /*PT Purge*/>
                         <Box style={{ position: 'absolute', top: '35px', left: '360px' }}>
-                            <DisplayLastData ID='P:Purge' data={this.props.data.PT_Purge} unit='psi' color='LightGreen'/>
+                            <DisplayLastData ID='P:F_INJ' data={this.props.data.PT_FUEL_INJ} unit='psi' color='LightGreen'/>
                         </Box>
                     </Item>
                     <Item /*PT FUEL PV*/>
