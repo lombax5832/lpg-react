@@ -77,7 +77,8 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
         worker.postMessage("HEY")
         worker.addEventListener('message', (ev) => {
             // console.log("MESSAGE RECEIVED:", ev)
-            console.log(this.state.refTime)
+            // console.log(this.state.refTime)
+            // console.log(ev.data)
             let data = JSON.parse(ev.data)
             if (data.PT_HE) {
                 let newRange = this.state.range

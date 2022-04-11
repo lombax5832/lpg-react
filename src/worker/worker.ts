@@ -50,6 +50,7 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
 
         // console.log(event.data)
         let item = JSON.parse(event.data)
+        console.log(item.message)
 
         const flushData = () => {
             callback(JSON.stringify(data))
@@ -113,11 +114,14 @@ function initWebSocket(url: string, callback: (message: string) => void): void {
                     timeout = false
                 }, 100)
             }
+
+            socket.send("RECEIVED DATA")
         }
 
 
-        if (item.message[0]?.FUEL_Press) {
-            sendButtonState(item.message.pop())
+        if (item.message=='PING') {
+            console.log("RECEIVED PING")
+            socket.send("PONG")
         }
 
     })
