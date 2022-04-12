@@ -232,9 +232,9 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                             </Grid>
                             <TabPanel value="1" style={{ padding: 10, paddingTop: 5 }} /* Charts for ALL PT Tab */>
                                 <Grid container item xs={12}>
-                                    <Grid item xs={6}><Chart data={this.state.data.PT_HE} timestamp={this.state.data.Timestamp} title={"PT_HE"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.PT_HE} timestamp={this.state.data.Timestamp} title={"PT_HE"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 2500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_FUEL_INJ} timestamp={this.state.data.Timestamp} title={"PT_FUEL_INJ"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.PT_Pneu} timestamp={this.state.data.Timestamp} title={"PT_Pneu"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.PT_Pneu} timestamp={this.state.data.Timestamp} title={"PT_Pneu"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 150], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_FUEL_PV} timestamp={this.state.data.Timestamp} title={"PT_FUEL_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_LOX_PV} timestamp={this.state.data.Timestamp} title={"PT_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_CHAM} timestamp={this.state.data.Timestamp} title={"PT_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
@@ -242,17 +242,17 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                             </TabPanel>
                             <TabPanel value="2" style={{ padding: 10, paddingTop: 5 }} /* Charts for ALL TC Tab */>
                                 <Grid container item xs={12}>
-                                    <Grid item xs={6}><Chart data={this.state.data.TC_FUEL_PV} timestamp={this.state.data.Timestamp} title={"TC_FUEL_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Temperature (C)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.TC_LOX_PV} timestamp={this.state.data.Timestamp} title={"TC_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Temperature (C)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.TC_LOX_Valve_Main} timestamp={this.state.data.Timestamp} title={"TC_LOX_Valve_Main"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Temperature (C)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.TC_WATER_In} timestamp={this.state.data.Timestamp} title={"TC_WATER_In"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Temperature (C)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.TC_WATER_Out} timestamp={this.state.data.Timestamp} title={"TC_WATER_Out"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Temperature (C)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.TC_CHAM} timestamp={this.state.data.Timestamp} title={"TC_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Temperature (C)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.TC_FUEL_PV} timestamp={this.state.data.Timestamp} title={"TC_FUEL_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [-270, 100], title: "Temperature (C)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.TC_LOX_PV} timestamp={this.state.data.Timestamp} title={"TC_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [-270, 100], title: "Temperature (C)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.TC_LOX_Valve_Main} timestamp={this.state.data.Timestamp} title={"TC_LOX_Valve_Main"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [-270, 100], title: "Temperature (C)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.TC_WATER_In} timestamp={this.state.data.Timestamp} title={"TC_WATER_In"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [-270, 100], title: "Temperature (C)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.TC_WATER_Out} timestamp={this.state.data.Timestamp} title={"TC_WATER_Out"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [-270, 100], title: "Temperature (C)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.TC_CHAM} timestamp={this.state.data.Timestamp} title={"TC_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [-270, 100], title: "Temperature (C)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
                             <TabPanel value="3" style={{ padding: 10, paddingTop: 5 }} /* Charts for Misc Inst. Tab */>
                                 <Grid container item xs={12}>
-                                    <Grid item xs={6}><Chart data={this.state.data.FT_Thrust} timestamp={this.state.data.Timestamp} title={"FT_Thrust"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    <Grid item xs={6}><Chart data={this.state.data.FT_Thrust} timestamp={this.state.data.Timestamp} title={"FT_Thrust"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 600], title: "Force (Lb)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
                             <TabPanel value="4" style={{ padding: 10, paddingTop: 5 }} /* Charts for LOAD STATE Tab */>
