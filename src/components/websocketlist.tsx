@@ -204,6 +204,13 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
         }
     }
 
+    writeData() {
+        let xhr = new XMLHttpRequest();
+        // xhr.open("GET", "http://65.78.156.235" + ":3003/serial/valve/update", true);
+        xhr.open("GET", "http://localhost" + DATA_STORAGE_URL + "WRITE", true);
+        xhr.send();
+    }
+
     render(): JSX.Element {
 
         return (<>
@@ -343,6 +350,13 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     STOP?
                                 </LoadingButton>
                                 <AlertDialog action={this.updateButtonEnable} triggerOpenDialog={this.state.storageButtonOpenDialog} dialogName={"data storage"} closeDialogFCN={this.closeDialog} />
+                            </div>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <div style={{ padding: 8, borderRadius: 10, border: '2px solid rgba(0, 0, 0, 0.3)', marginTop: 10 }}>
+                                <Button variant="contained" color="success" fullWidth onClick={() => { this.writeData() }} sx={{ fontWeight: 'bold' }}>
+                                    SAVE DATA SNAPSHOT
+                                </Button>
                             </div>
                         </Grid>
                     </Grid>
