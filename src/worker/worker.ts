@@ -6,7 +6,7 @@ const ctx: Worker = self as any;
 
 // Respond to message from parent thread
 ctx.addEventListener("message", (event) => {
-    initWebSocket("ws://localhost:8765", (message) => { ctx.postMessage(message) })
+    initWebSocket("ws://localhost:3003", (message) => { ctx.postMessage(message) })
 });
 
 function initWebSocket(url: string, callback: (message: string) => void): void {
