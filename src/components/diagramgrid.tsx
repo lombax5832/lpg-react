@@ -48,11 +48,11 @@ class DiagramGrid extends Component<{ data: IDataLast }, {}> {
                             <DisplayLastData ID='P:HE' data={this.props.data.PT_HE} unit='psi' color='LightGreen' />
                         </Box>
                     </Item>
-                    <Item /*PT Pneu*/>
+                    {/* <Item /PT Pneu/>
                         <Box style={{ position: 'absolute', top: '35px', left: '222px' }}>
                             <DisplayLastData ID='P:Pneu' data={this.props.data.PT_Pneu} unit='psi' color='LightGreen' />
                         </Box>
-                    </Item>
+                    </Item> */}
                     <Item /*PT FUEL PV*/>
                         <Box style={{ position: 'absolute', top: '270px', left: '5px' }}>
                             <DisplayLastData ID='P:FUEL' data={this.props.data.PT_FUEL_PV} unit='psi' color='LightGreen'/>
@@ -73,11 +73,11 @@ class DiagramGrid extends Component<{ data: IDataLast }, {}> {
                             <DisplayLastData ID='T:LOX' data={this.props.data.TC_LOX_PV} unit='°C' color='LightSkyBlue'/>
                         </Box>
                     </Item>
-                    <Item /*TC LOX VALVE*/>
+                    {/* <Item /TC LOX VALVE/>
                         <Box style={{ position: 'absolute', top: '420px', left: '85px' }}>
                             <DisplayLastData ID='T:LOX Valve' data={this.props.data.TC_LOX_Valve_Main} unit='°C' color='LightSkyBlue'/>
                         </Box>
-                    </Item>
+                    </Item> */}
                     <Item /*TC WATER OUT*/>
                         <Box style={{ position: 'absolute', top: '465px', left: '250px' }}>
                             <DisplayLastData ID='T:OUT' data={this.props.data.TC_WATER_Out} unit='°C' color='LightSkyBlue'/>

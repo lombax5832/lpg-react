@@ -7,7 +7,7 @@ const Plot = createPlotlyComponent(Plotly);
 
 class Multichart extends Component<{
     data: {
-        series1: number[], series2: number[], series3: number[],
+        series1: number[], series2: number[], series3: number[], series4: number[],
         name1: string, name2: string, name3: string, name4: string,
         color1: string, color2: string, color3: string, color4: string
     },
@@ -24,6 +24,7 @@ class Multichart extends Component<{
                 { type: 'scattergl', x: this.props.timestamp, y: this.props.data.series1, name: this.props.data.name1, line: { color: this.props.data.color1 } },
                 { type: 'scattergl', x: this.props.timestamp, y: this.props.data.series2, name: this.props.data.name2, line: { color: this.props.data.color2 } },
                 { type: 'scattergl', x: this.props.timestamp, y: this.props.data.series3, name: this.props.data.name3, line: { color: this.props.data.color3 } },
+                { type: 'scattergl', x: this.props.timestamp, y: this.props.data.series4, name: this.props.data.name4, line: { color: this.props.data.color4 } }
             ]}
             onRelayout={(val) => console.log("Selected", val)}
             layout={{

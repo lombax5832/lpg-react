@@ -318,7 +318,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     </Grid>
                                     <Grid item xs={6}><Multichart /* TANK PT, one chart */
                                         data={{
-                                            series1: this.state.data.PT_HE, series2: this.state.data.PT_FUEL_INJ, series3: [],
+                                            series1: [], series2: this.state.data.PT_HE, series3: this.state.data.PT_FUEL_INJ, series4: [],
                                             name1: "PT_Pneu", name2: "PT_HE", name3: "PT_FUEL_INJ", name4: "",
                                             color1: "", color2: "", color3: "", color4: ""
                                         }}
