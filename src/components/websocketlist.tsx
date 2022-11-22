@@ -248,6 +248,11 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
     writeData() {
         let xhr = new XMLHttpRequest();
         // xhr.open("GET", "http://65.78.156.235" + ":3003/serial/valve/update", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                alert(xhr.responseText)
+            }
+        }.bind(this)
         xhr.open("GET", "http://localhost" + DATA_STORAGE_URL + "WRITE", true);
         xhr.send();
     }
