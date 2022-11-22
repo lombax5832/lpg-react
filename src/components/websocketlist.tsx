@@ -47,14 +47,14 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 Timestamp: [],
                 PT_HE: [],
                 //PT_Purge: [],
-                PT_Pneu: [],
+                // PT_Pneu: [],
                 PT_FUEL_PV: [],
                 PT_LOX_PV: [],
                 PT_FUEL_INJ: [],
                 PT_CHAM: [],
                 TC_FUEL_PV: [],
                 TC_LOX_PV: [],
-                TC_LOX_Valve_Main: [],
+                // TC_LOX_Valve_Main: [],
                 TC_WATER_In: [],
                 TC_WATER_Out: [],
                 TC_CHAM: [],
@@ -95,14 +95,14 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                         Timestamp: [...this.state.data.Timestamp, ...data.Timestamp.map((value) => value - this.state.timeOffset)],
                         PT_HE: [...this.state.data.PT_HE, ...data.PT_HE],
                         //PT_Purge: [...this.state.data.PT_Purge, ...data.PT_Purge],
-                        PT_Pneu: [...this.state.data.PT_Pneu, ...data.PT_Pneu],
+                        // PT_Pneu: [...this.state.data.PT_Pneu, ...data.PT_Pneu],
                         PT_FUEL_PV: [...this.state.data.PT_FUEL_PV, ...data.PT_FUEL_PV],
                         PT_LOX_PV: [...this.state.data.PT_LOX_PV, ...data.PT_LOX_PV],
                         PT_FUEL_INJ: [...this.state.data.PT_FUEL_INJ, ...data.PT_FUEL_INJ],
                         PT_CHAM: [...this.state.data.PT_CHAM, ...data.PT_CHAM],
                         TC_FUEL_PV: [...this.state.data.TC_FUEL_PV, ...data.TC_FUEL_PV],
                         TC_LOX_PV: [...this.state.data.TC_LOX_PV, ...data.TC_LOX_PV],
-                        TC_LOX_Valve_Main: [...this.state.data.TC_LOX_Valve_Main, ...data.TC_LOX_Valve_Main],
+                        // TC_LOX_Valve_Main: [...this.state.data.TC_LOX_Valve_Main, ...data.TC_LOX_Valve_Main],
                         TC_WATER_In: [...this.state.data.TC_WATER_In, ...data.TC_WATER_In],
                         TC_WATER_Out: [...this.state.data.TC_WATER_Out, ...data.TC_WATER_Out],
                         TC_CHAM: [...this.state.data.TC_CHAM, ...data.TC_CHAM],
@@ -127,14 +127,14 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 Timestamp: [],
                 PT_HE: [],
                 //PT_Purge: [],
-                PT_Pneu: [],
+                // PT_Pneu: [],
                 PT_FUEL_PV: [],
                 PT_LOX_PV: [],
                 PT_FUEL_INJ: [],
                 PT_CHAM: [],
                 TC_FUEL_PV: [],
                 TC_LOX_PV: [],
-                TC_LOX_Valve_Main: [],
+                // TC_LOX_Valve_Main: [],
                 TC_WATER_In: [],
                 TC_WATER_Out: [],
                 TC_CHAM: [],
@@ -282,7 +282,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                 <Grid container item xs={12}>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_HE} timestamp={this.state.data.Timestamp} title={"PT_HE"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 2500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_FUEL_INJ} timestamp={this.state.data.Timestamp} title={"PT_FUEL_INJ"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.PT_Pneu} timestamp={this.state.data.Timestamp} title={"PT_Pneu"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 150], title: "Pressure (PSI)" }} /></Grid>
+                                    {/* <Grid item xs={6}><Chart data={this.state.data.PT_Pneu} timestamp={this.state.data.Timestamp} title={"PT_Pneu"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 150], title: "Pressure (PSI)" }} /></Grid> */}
                                     <Grid item xs={6}><Chart data={this.state.data.PT_FUEL_PV} timestamp={this.state.data.Timestamp} title={"PT_FUEL_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_LOX_PV} timestamp={this.state.data.Timestamp} title={"PT_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_CHAM} timestamp={this.state.data.Timestamp} title={"PT_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
@@ -292,7 +292,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                 <Grid container item xs={12}>
                                     <Grid item xs={6}><Chart data={this.state.data.TC_FUEL_PV} timestamp={this.state.data.Timestamp} title={"TC_FUEL_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [-270, 100], title: "Temperature (C)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.TC_LOX_PV} timestamp={this.state.data.Timestamp} title={"TC_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [-270, 100], title: "Temperature (C)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.TC_LOX_Valve_Main} timestamp={this.state.data.Timestamp} title={"TC_LOX_Valve_Main"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [-270, 100], title: "Temperature (C)" }} /></Grid>
+                                    {/* <Grid item xs={6}><Chart data={this.state.data.TC_LOX_Valve_Main} timestamp={this.state.data.Timestamp} title={"TC_LOX_Valve_Main"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [-270, 100], title: "Temperature (C)" }} /></Grid> */}
                                     <Grid item xs={6}><Chart data={this.state.data.TC_WATER_In} timestamp={this.state.data.Timestamp} title={"TC_WATER_In"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [-270, 100], title: "Temperature (C)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.TC_WATER_Out} timestamp={this.state.data.Timestamp} title={"TC_WATER_Out"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [-270, 100], title: "Temperature (C)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.TC_CHAM} timestamp={this.state.data.Timestamp} title={"TC_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [-270, 100], title: "Temperature (C)" }} /></Grid>
@@ -318,7 +318,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     </Grid>
                                     <Grid item xs={6}><Multichart /* TANK PT, one chart */
                                         data={{
-                                            series1: this.state.data.PT_Pneu, series2: this.state.data.PT_HE, series3: this.state.data.PT_FUEL_INJ, series4: [],
+                                            series1: this.state.data.PT_HE, series2: this.state.data.PT_FUEL_INJ, series3: [],
                                             name1: "PT_Pneu", name2: "PT_HE", name3: "PT_FUEL_INJ", name4: "",
                                             color1: "", color2: "", color3: "", color4: ""
                                         }}
@@ -348,14 +348,14 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                         <DiagramGrid data={{ // Only pass the last elements to save time
                             PT_HE: this.state.data.PT_HE[this.state.data.PT_HE.length - 1],
                             // PT_Purge: this.state.data.PT_Purge[this.state.data.PT_Purge.length - 1],
-                            PT_Pneu: this.state.data.PT_Pneu[this.state.data.PT_Pneu.length - 1],
+                            // PT_Pneu: this.state.data.PT_Pneu[this.state.data.PT_Pneu.length - 1],
                             PT_FUEL_PV: this.state.data.PT_FUEL_PV[this.state.data.PT_FUEL_PV.length - 1],
                             PT_LOX_PV: this.state.data.PT_LOX_PV[this.state.data.PT_LOX_PV.length - 1],
                             PT_FUEL_INJ: this.state.data.PT_FUEL_INJ[this.state.data.PT_FUEL_INJ.length - 1],
                             PT_CHAM: this.state.data.PT_CHAM[this.state.data.PT_CHAM.length - 1],
                             TC_FUEL_PV: this.state.data.TC_FUEL_PV[this.state.data.TC_FUEL_PV.length - 1],
                             TC_LOX_PV: this.state.data.TC_LOX_PV[this.state.data.TC_LOX_PV.length - 1],
-                            TC_LOX_Valve_Main: this.state.data.TC_LOX_Valve_Main[this.state.data.TC_LOX_Valve_Main.length - 1],
+                            // TC_LOX_Valve_Main: this.state.data.TC_LOX_Valve_Main[this.state.data.TC_LOX_Valve_Main.length - 1],
                             TC_WATER_In: this.state.data.TC_WATER_In[this.state.data.TC_WATER_In.length - 1],
                             TC_WATER_Out: this.state.data.TC_WATER_Out[this.state.data.TC_WATER_Out.length - 1],
                             TC_CHAM: this.state.data.TC_CHAM[this.state.data.TC_CHAM.length - 1],
