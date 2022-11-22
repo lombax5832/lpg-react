@@ -73,6 +73,9 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
     }
 
     componentDidMount() {
+        this.queryDataCollectionStatus()
+        this.queryDataStorageStatus()
+
         const worker = new Worker()
         worker.postMessage("HEY")
         worker.addEventListener('message', (ev) => {
@@ -141,6 +144,26 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
         })
     }
 
+    queryDataCollectionStatus() {
+        console.log("Check collection status")
+        // Ping the Pi to determine the current status of the data collection system
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            console.log(xhr.readyState)
+            console.log(xhr.status)
+            if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                console.log(xhr.responseText)
+                if (xhr.responseText == "True") {
+                    this.setState({ dataButtonEnable: false });
+                } else {
+                    this.setState({ dataButtonEnable: true })
+                }
+            }
+        }.bind(this)
+        xhr.open("GET", PI_IP + DATA_COLLECT_URL + "STATUS", true);
+        xhr.send();
+    }
+
     startDataCollection() {
         // Disable the button
         // Enable the abort button
@@ -150,6 +173,24 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
         let xhr = new XMLHttpRequest();
         // xhr.open("GET", "http://65.78.156.235" + ":3003/serial/valve/update", true);
         xhr.open("GET", PI_IP + DATA_COLLECT_URL + "START", true);
+        xhr.send();
+    }
+
+    queryDataStorageStatus() {
+        console.log("Check storage status")
+        // Ping the Pi to determine the current status of the data storage system
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                if (xhr.responseText == "True") {
+                    // console.log("Storage is enabled")
+                    this.setState({ storageButtonEnable: false })
+                } else {
+                    this.setState({ storageButtonEnable: true })
+                }
+            }
+        }.bind(this)
+        xhr.open("GET", "http://localhost" + DATA_STORAGE_URL + "STATUS", true);
         xhr.send();
     }
 
