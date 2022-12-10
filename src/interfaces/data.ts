@@ -2,7 +2,7 @@ export interface IData {
     Timestamp: number[]
     PT_HE: number[]
     // PT_Purge: number[]
-    // PT_Pneu: number[]
+    PT_LOX_2: number[]
     PT_FUEL_PV: number[]
     PT_LOX_PV: number[]
     PT_FUEL_INJ: number[]
@@ -21,7 +21,7 @@ export interface IDataLast {
     // Timestamp: number
     PT_HE: number
     // PT_Purge: number
-    // PT_Pneu: number
+    PT_LOX_2: number
     PT_FUEL_PV: number
     PT_LOX_PV: number
     PT_FUEL_INJ: number

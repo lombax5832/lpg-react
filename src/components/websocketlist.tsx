@@ -47,7 +47,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 Timestamp: [],
                 PT_HE: [],
                 //PT_Purge: [],
-                // PT_Pneu: [],
+                PT_LOX_2: [],
                 PT_FUEL_PV: [],
                 PT_LOX_PV: [],
                 PT_FUEL_INJ: [],
@@ -95,7 +95,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                         Timestamp: [...this.state.data.Timestamp, ...data.Timestamp.map((value) => value - this.state.timeOffset)],
                         PT_HE: [...this.state.data.PT_HE, ...data.PT_HE],
                         //PT_Purge: [...this.state.data.PT_Purge, ...data.PT_Purge],
-                        // PT_Pneu: [...this.state.data.PT_Pneu, ...data.PT_Pneu],
+                        PT_LOX_2: [...this.state.data.PT_LOX_2, ...data.PT_LOX_2],
                         PT_FUEL_PV: [...this.state.data.PT_FUEL_PV, ...data.PT_FUEL_PV],
                         PT_LOX_PV: [...this.state.data.PT_LOX_PV, ...data.PT_LOX_PV],
                         PT_FUEL_INJ: [...this.state.data.PT_FUEL_INJ, ...data.PT_FUEL_INJ],
@@ -127,7 +127,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                 Timestamp: [],
                 PT_HE: [],
                 //PT_Purge: [],
-                // PT_Pneu: [],
+                PT_LOX_2: [],
                 PT_FUEL_PV: [],
                 PT_LOX_PV: [],
                 PT_FUEL_INJ: [],
@@ -148,7 +148,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
         console.log("Check collection status")
         // Ping the Pi to determine the current status of the data collection system
         let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             console.log(xhr.readyState)
             console.log(xhr.status)
             if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
@@ -180,7 +180,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
         console.log("Check storage status")
         // Ping the Pi to determine the current status of the data storage system
         let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                 if (xhr.responseText == "True") {
                     // console.log("Storage is enabled")
@@ -248,7 +248,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
     writeData() {
         let xhr = new XMLHttpRequest();
         // xhr.open("GET", "http://65.78.156.235" + ":3003/serial/valve/update", true);
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                 alert(xhr.responseText)
             }
@@ -289,7 +289,18 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                                     <Grid item xs={6}><Chart data={this.state.data.PT_FUEL_INJ} timestamp={this.state.data.Timestamp} title={"PT_FUEL_INJ"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     {/* <Grid item xs={6}><Chart data={this.state.data.PT_Pneu} timestamp={this.state.data.Timestamp} title={"PT_Pneu"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 150], title: "Pressure (PSI)" }} /></Grid> */}
                                     <Grid item xs={6}><Chart data={this.state.data.PT_FUEL_PV} timestamp={this.state.data.Timestamp} title={"PT_FUEL_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.PT_LOX_PV} timestamp={this.state.data.Timestamp} title={"PT_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    {/* <Grid item xs={6}><Chart data={this.state.data.PT_LOX_PV} timestamp={this.state.data.Timestamp} title={"PT_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid> */}
+                                    <Grid item xs={6}><Multichart
+                                        data={{
+                                            series1: this.state.data.PT_LOX_PV, series2: this.state.data.PT_LOX_2, series3: [], series4: [],
+                                            name1: "PT_LOX_PV", name2: "PT_LOX_2", name3: "", name4: "",
+                                            color1: FUEL_COLOR, color2: LOX_COLOR, color3: "", color4: ""
+                                        }}
+                                        timestamp={this.state.data.Timestamp}
+                                        title={"PT_LOX_PV"}
+                                        xaxis={{ range: this.state.range.value }}
+                                        yaxis={{ range: [0, 500], title: "Pressure (PSI)" }}/>
+                                    </Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_CHAM} timestamp={this.state.data.Timestamp} title={"PT_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                 </Grid>
                             </TabPanel>
@@ -339,7 +350,18 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                             <TabPanel value="5" style={{ padding: 10, paddingTop: 5 }} /* Charts for  OPERATION STATE tab */ >
                                 <Grid container item xs={12}>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_FUEL_PV} timestamp={this.state.data.Timestamp} title={"PT_FUEL_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
-                                    <Grid item xs={6}><Chart data={this.state.data.PT_LOX_PV} timestamp={this.state.data.Timestamp} title={"PT_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
+                                    {/* <Grid item xs={6}><Chart data={this.state.data.PT_LOX_PV} timestamp={this.state.data.Timestamp} title={"PT_LOX_PV"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid> */}
+                                    <Grid item xs={6}><Multichart
+                                        data={{
+                                            series1: this.state.data.PT_LOX_PV, series2: this.state.data.PT_LOX_2, series3: [], series4: [],
+                                            name1: "PT_LOX_PV", name2: "PT_LOX_2", name3: "", name4: "",
+                                            color1: FUEL_COLOR, color2: LOX_COLOR, color3: "", color4: ""
+                                        }}
+                                        timestamp={this.state.data.Timestamp}
+                                        title={"PT_LOX_PV"}
+                                        xaxis={{ range: this.state.range.value }}
+                                        yaxis={{ range: [0, 500], title: "Pressure (PSI)" }}/>
+                                    </Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.PT_CHAM} timestamp={this.state.data.Timestamp} title={"PT_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Pressure (PSI)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.TC_CHAM} timestamp={this.state.data.Timestamp} title={"TC_CHAM"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Temperature (C)" }} /></Grid>
                                     <Grid item xs={6}><Chart data={this.state.data.FT_Thrust} timestamp={this.state.data.Timestamp} title={"FT_Thrust"} xaxis={{ range: this.state.range.value }} yaxis={{ range: [0, 500], title: "Force (Lbf)" }} /></Grid>
@@ -353,7 +375,7 @@ class WebSocketList extends Component<{}, { data: IData, range: { follow: boolea
                         <DiagramGrid data={{ // Only pass the last elements to save time
                             PT_HE: this.state.data.PT_HE[this.state.data.PT_HE.length - 1],
                             // PT_Purge: this.state.data.PT_Purge[this.state.data.PT_Purge.length - 1],
-                            // PT_Pneu: this.state.data.PT_Pneu[this.state.data.PT_Pneu.length - 1],
+                            PT_LOX_2: this.state.data.PT_LOX_2[this.state.data.PT_LOX_2.length - 1],
                             PT_FUEL_PV: this.state.data.PT_FUEL_PV[this.state.data.PT_FUEL_PV.length - 1],
                             PT_LOX_PV: this.state.data.PT_LOX_PV[this.state.data.PT_LOX_PV.length - 1],
                             PT_FUEL_INJ: this.state.data.PT_FUEL_INJ[this.state.data.PT_FUEL_INJ.length - 1],

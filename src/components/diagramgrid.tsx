@@ -48,18 +48,18 @@ class DiagramGrid extends Component<{ data: IDataLast }, {}> {
                             <DisplayLastData ID='P:HE' data={this.props.data.PT_HE} unit='psi' color='LightGreen' />
                         </Box>
                     </Item>
-                    {/* <Item /PT Pneu/>
-                        <Box style={{ position: 'absolute', top: '35px', left: '222px' }}>
-                            <DisplayLastData ID='P:Pneu' data={this.props.data.PT_Pneu} unit='psi' color='LightGreen' />
+                    <Item /*PT LOX 2*/>
+                        <Box style={{ position: 'absolute', top: '270px', left: '184px' }}>
+                            <DisplayLastData ID='P:LOX2' data={this.props.data.PT_LOX_2} unit='psi' color='LightGreen' />
                         </Box>
-                    </Item> */}
+                    </Item>
                     <Item /*PT FUEL PV*/>
                         <Box style={{ position: 'absolute', top: '270px', left: '5px' }}>
                             <DisplayLastData ID='P:FUEL' data={this.props.data.PT_FUEL_PV} unit='psi' color='LightGreen'/>
                         </Box>
                     </Item>
                     <Item /*PT LOX PV*/>
-                        <Box style={{ position: 'absolute', top: '270px', left: '141px' }}>
+                        <Box style={{ position: 'absolute', top: '270px', left: '101px' }}>
                             <DisplayLastData ID='P:LOX' data={this.props.data.PT_LOX_PV} unit='psi' color='LightGreen'/>
                         </Box>
                     </Item>
